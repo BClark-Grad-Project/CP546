@@ -2,25 +2,71 @@
 extends layout
 - userpool = typeof(userpool) != 'undefined' ? userpool : { }
 
-//-CSS is inserted in the HEAD tag.
-block css
-  
 //-JavaScript will be inserted at the end of the BODY tag.
 block js
   
 //-Add navigation item to existing navigation set.
 block nav
-  
-//-Add navigation item to existing Administrator navigation set.
-block navAdmin
-    
+  li
+    a(data-toggle='collapse',data-parent="#accordion", data-target='#collapseOne', href='#collapseOne') Assign Password
+  li
+    a(data-toggle='collapse',data-parent="#accordion", data-target='#collapseThree', href='#collapseThree') Deactivate Account
+ 
 //-HTML content to display.
 block content
   section#main.container
     .row
       //-Columns in a row must equal 12. 
       .col-xs-12.col-sm-12.col-md-12.col-lg-12
-        h1 #{title}
-        p Welcome #{user.first}
+        h1 Manage Account
+        br
+        p Please select the activity you wish to conduct below.
+        br
+        br
+        #accordion.panel-group
+          .panel.panel-default
+            .panel-heading
+              h2.panel-title
+                a(data-toggle="collapse", data-parent="#accordion", href="#collapseOne")
+                  | Assign Password
+            #collapseOne.panel-collapse.collapse
+              .panel-body
+                form(role='form', method='POST', action='/credentials/create', id='assign_password')
+                  h3 User Name
+                  .input-group
+                    .input-group-addon First Name
+                    input.form-control(name='first', placeholder='', type='input', autofocus, required)
+                  br
+                  .input-group
+                    .input-group-addon Last Name
+                    input.form-control(name='last', placeholder='', type='input', required)
+                  br
+                  .input-group
+                    .input-group-addon User ID
+                    input.form-control(name='id', placeholder='', type='input', required)
+                  br
+                  button.btn.btn-lg.btn-primary.pull-right.disabled(type='submit') Submit
+          .panel.panel-default
+            .panel-heading
+              h2.panel-title
+                a(data-toggle="collapse", data-parent="#accordion", href="#collapseTwo")
+                  | Deactivate Account
+            #collapseTwo.panel-collapse.collapse
+              .panel-body
+                form(role='form', method='POST', action='/credentials/create', id='deactivate_account')
+                  h3 User Name
+                  .input-group
+                    .input-group-addon First Name
+                    input.form-control(name='first', placeholder='', type='input', autofocus, required)
+                  br
+                  .input-group
+                    .input-group-addon Last Name
+                    input.form-control(name='last', placeholder='', type='input', required)
+                  br
+                  .input-group
+                    .input-group-addon User ID
+                    input.form-control(name='id', placeholder='', type='input', required)
+                  br
+                  button.btn.btn-lg.btn-primary.pull-right.disabled(type='submit') Submit
 
 // End Jade Template
