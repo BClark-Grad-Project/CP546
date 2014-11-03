@@ -12,7 +12,6 @@ block js
 //-Add navigation item to existing navigation set.
 block nav
   +navItem('#main','My schedule')
-  +navItem('#sec-two','My schedule')
   
 //-Add navigation item to existing Teacher navigation set.
 block navTeacher
@@ -51,7 +50,10 @@ block content
         .col-xs-1.col-sm-1.col-md-1.col-lg-1
           b LOC
         .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          b INST
+          if(user.type == 'student')
+            b INST
+          else
+            b 
       br
       .row
         .col-xs-12.col-sm-12.col-md-12.col-lg-12
@@ -59,7 +61,26 @@ block content
             if(user.type == 'student')
               button.btn.btn-xs.btn-primary(type='button') Drop
             else if(user.type=='teacher')
-              button.btn.btn-xs.btn-primary(type='button') Roll 
+              button.btn.btn-primary.btn-xs(data-toggle="modal", data-target="#student-list") Roll 
+              #student-list.modal.fade(tabindex="-1", role="dialog", aria-labelledby="student-list-title", aria-hidden="true")
+                .modal-dialog
+                  .modal-content
+                    .modal-header
+                      button.close(type="button", data-dismiss="modal")
+                        span(aria-hidden="true")
+                          | &times;
+                          span.sr-only Close
+                      h4.student-list-title.modal-title -Class Code- -Class Name-
+                  .modal-body
+                    select.form-control(multiple, size='10')
+                      option Brandon L. CLark
+                      option Christie Phan
+                      option Hooman Rocks
+                      option Panki Soni
+                  .modal-footer
+                    button.btn.btn-default(type="button", data-dismiss="modal") Close
+                    button.btn.btn-primary(type="button") Drop Student
+                    button.btn.btn-primary(type="button") View Class History 
           .col-xs-1.col-sm-1.col-md-1.col-lg-1
             p Art 101
           .col-xs-1.col-sm-1.col-md-1.col-lg-1
@@ -77,7 +98,10 @@ block content
           .col-xs-1.col-sm-1.col-md-1.col-lg-1
             p AR 101
           .col-xs-1.col-sm-1.col-md-1.col-lg-1
-            p Phan,C
+            if(user.type == 'student')
+              b Phan,C
+            else if (user.type== 'teacher')
+              b 
       br
       .row
         .col-xs-12.col-sm-12.col-md-12.col-lg-12
@@ -85,7 +109,26 @@ block content
             if(user.type == 'student')
               button.btn.btn-xs.btn-primary(type='button') Drop
             else if(user.type=='teacher')
-              button.btn.btn-xs.btn-primary(type='button') Roll 
+              button.btn.btn-primary.btn-xs(data-toggle="modal", data-target="#student-list") Roll 
+              #student-list.modal.fade(tabindex="-1", role="dialog", aria-labelledby="student-list-title", aria-hidden="true")
+                .modal-dialog
+                  .modal-content
+                    .modal-header
+                      button.close(type="button", data-dismiss="modal")
+                        span(aria-hidden="true")
+                          | &times;
+                          span.sr-only Close
+                      h4.student-list-title.modal-title -Class Code- -Class Name-
+                  .modal-body
+                    select.form-control(multiple, size='10')
+                      option Brandon L. CLark
+                      option Christie Phan
+                      option Hooman Rocks
+                      option Panki Soni
+                  .modal-footer
+                    button.btn.btn-default(type="button", data-dismiss="modal") Close
+                    button.btn.btn-primary(type="button") Drop Student
+                    button.btn.btn-primary(type="button") View Class History 
           .col-xs-1.col-sm-1.col-md-1.col-lg-1
             p BIOL-102
           .col-xs-1.col-sm-1.col-md-1.col-lg-1
@@ -103,16 +146,37 @@ block content
           .col-xs-1.col-sm-1.col-md-1.col-lg-1
             p HS101
           .col-xs-1.col-sm-1.col-md-1.col-lg-1
-            p Clark,B 
-          .col-xs-1.col-sm-1.col-md-1.col-lg-1  
+            if(user.type == 'student')
+              b Clark,B
+            else if (user.type == 'teacher')
+              b 
       br
       .row
         .col-xs-12.col-sm-12.col-md-12.col-lg-12
-          .col-xs-1.col-sm-1.col-md-1.col-lg-1
+          .col-xs-1.col-sm-1.col-md-1.col-lg-1 
             if(user.type == 'student')
               button.btn.btn-xs.btn-primary(type='button') Drop
             else if(user.type=='teacher')
-              button.btn.btn-xs.btn-primary(type='button') Roll   
+              button.btn.btn-primary.btn-xs(data-toggle="modal", data-target="#student-list") Roll 
+              #student-list.modal.fade(tabindex="-1", role="dialog", aria-labelledby="student-list-title", aria-hidden="true")
+                .modal-dialog
+                  .modal-content
+                    .modal-header
+                      button.close(type="button", data-dismiss="modal")
+                        span(aria-hidden="true")
+                          | &times;
+                          span.sr-only Close
+                      h4.student-list-title.modal-title -Class Code- -Class Name-
+                  .modal-body
+                    select.form-control(multiple, size='10')
+                      option Brandon L. CLark
+                      option Christie Phan
+                      option Hooman Rocks
+                      option Panki Soni
+                  .modal-footer
+                    button.btn.btn-default(type="button", data-dismiss="modal") Close
+                    button.btn.btn-primary(type="button") Drop Student
+                    button.btn.btn-primary(type="button") View Class History  
           .col-xs-1.col-sm-1.col-md-1.col-lg-1
             p BIOL-102
           .col-xs-1.col-sm-1.col-md-1.col-lg-1
@@ -130,30 +194,9 @@ block content
           .col-xs-1.col-sm-1.col-md-1.col-lg-1
             p HS101
           .col-xs-1.col-sm-1.col-md-1.col-lg-1
-            p Majidz,H  
-      br
-      .row
-        .col-xs-12.col-sm-12.col-md-12.col-lg-12
-        button.btn.btn-primary.btn-lg(data-toggle="modal", data-target="#student-list") Teachers Only 
-        #student-list.modal.fade(tabindex="-1", role="dialog", aria-labelledby="student-list-title", aria-hidden="true")
-          .modal-dialog
-            .modal-content
-              .modal-header
-                 button.close(type="button", data-dismiss="modal")
-                   span(aria-hidden="true")
-                     | &times;
-                     span.sr-only Close
-                 h4.student-list-title.modal-title -Class Code- -Class Name-
-              .modal-body
-                select.form-control(multiple, size='10')
-                  option Brandon L. CLark
-                  option Christie Phan
-                  option Hooman Rocks
-                  option Panki Soni
-              .modal-footer
-                button.btn.btn-default(type="button", data-dismiss="modal") Close
-                button.btn.btn-primary(type="button") Drop Student
-                button.btn.btn-primary(type="button") View Class History
-    
+            if(user.type == 'student')
+              b Majidz,H
+            else if (user.type == 'teacher')
+              b  
 
 // End Jade Template
