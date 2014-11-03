@@ -54,180 +54,196 @@ block content
         h3 Fall 2014
         h4 Start Date: 8/26-12/15
         // note expand buttons should change to collapse when necessary
-        br
-        button.btn.btn-lg.btn-primary(type='button') Expand +
-        br
-        br
-        br
-        h4 Art-(ART)
-        p Please refer to the class notes as indicated on individual sections to determine any supply and/or model fees which might apply.
-        h5 Art 101-Artist In Their Own Words (3Units) 
     br
     .row
       .col-xs-12.col-sm-12.col-md-12.col-lg-12
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          b ADD
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          b SEC
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          b CODE
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          b TYPES
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          b DAYS
-        .col-xs-2.col-sm-2.col-md-2.col-lg-2
-          b TIME
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          b OPEN SEATS
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          b LOC
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          b INST
-        .col-xs-2.col-sm-2.col-md-2.col-lg-2
-          b COMMENTS
+        #accordion.panel-group
+          .panel.panel-default
+            .panel-heading
+              h2.panel-title
+                a(data-toggle="collapse", data-parent="#accordion", href="#collapseOne")
+                  | Art-(ART) 
+            #collapseOne.panel-collapse.collapse
+              .panel-body
+              p Please refer to the class notes as indicated on individual sections to determine any supply and/or model fees which might apply.
+              h5 Art 101-Artist In Their Own Words (3Units)       
+              br
+              .row
+                .col-xs-12.col-sm-12.col-md-12.col-lg-12
+                  .col-xs-1.col-sm-1.col-md-1.col-lg-1
+                    b SEC
+                  .col-xs-1.col-sm-1.col-md-1.col-lg-1
+                    b CODE
+                  .col-xs-1.col-sm-1.col-md-1.col-lg-1
+                    b TYPES
+                  .col-xs-1.col-sm-1.col-md-1.col-lg-1
+                    b DAYS
+                  .col-xs-2.col-sm-2.col-md-2.col-lg-2
+                    b TIME
+                  .col-xs-1.col-sm-1.col-md-1.col-lg-1
+                    b OPEN SEATS
+                  .col-xs-1.col-sm-1.col-md-1.col-lg-1
+                    b LOC
+                  .col-xs-1.col-sm-1.col-md-1.col-lg-1
+                    b INST
+                  .col-xs-2.col-sm-2.col-md-2.col-lg-2
+                    b COMMENTS
+                  .col-xs-1.col-sm-1.col-md-1.col-lg-1
+                      if(user.type == 'student')
+                        b Add
+                      else
+                        b
+              br
+              .row
+                .col-xs-12.col-sm-12.col-md-12.col-lg-12
+                  .col-xs-1.col-sm-1.col-md-1.col-lg-1
+                    p 1
+                  .col-xs-1.col-sm-1.col-md-1.col-lg-1
+                    p A01
+                  .col-xs-1.col-sm-1.col-md-1.col-lg-1
+                    p SEM
+                  .col-xs-1.col-sm-1.col-md-1.col-lg-1
+                    p MW
+                  .col-xs-2.col-sm-2.col-md-2.col-lg-2
+                    p 8-9:15AM
+                  .col-xs-1.col-sm-1.col-md-1.col-lg-1
+                    p 1
+                  .col-xs-1.col-sm-1.col-md-1.col-lg-1
+                    p AR 101
+                  .col-xs-1.col-sm-1.col-md-1.col-lg-1
+                    p Phan,C
+                  .col-xs-2.col-sm-2.col-md-2.col-lg-2
+                    p Instructor Consent Req 
+                  .col-xs-1.col-sm-1.col-md-1.col-lg-1
+                      if(user.type == 'student')
+                        button.btn.btn-xs.btn-primary(type='button') Add
+                      else
+                        b
+              br
+              .row
+                .col-xs-12.col-sm-12.col-md-12.col-lg-12
+                  .col-xs-1.col-sm-1.col-md-1.col-lg-1
+                    p 2
+                  .col-xs-1.col-sm-1.col-md-1.col-lg-1
+                    p A02
+                  .col-xs-1.col-sm-1.col-md-1.col-lg-1
+                    p SEM
+                  .col-xs-1.col-sm-1.col-md-1.col-lg-1
+                    p MW
+                  .col-xs-2.col-sm-2.col-md-2.col-lg-2
+                    p 9:30-10:45AM
+                  .col-xs-1.col-sm-1.col-md-1.col-lg-1
+                    p 1
+                  .col-xs-1.col-sm-1.col-md-1.col-lg-1
+                    p AR 101
+                  .col-xs-1.col-sm-1.col-md-1.col-lg-1
+                    p Phan,C
+                  .col-xs-2.col-sm-2.col-md-2.col-lg-2
+                    p Instructor Consent Req   
+                  .col-xs-1.col-sm-1.col-md-1.col-lg-1
+                      if(user.type == 'student')
+                        button.btn.btn-xs.btn-primary(type='button') Add
+                      else
+                        b 
     br
     .row
       .col-xs-12.col-sm-12.col-md-12.col-lg-12
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          button.btn.btn-xs.btn-primary(type='button') Add
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          p 1
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          p A01
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          p SEM
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          p MW
-        .col-xs-2.col-sm-2.col-md-2.col-lg-2
-          p 8-9:15AM
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          p 1
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          p AR 101
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          p Phan,C
-        .col-xs-2.col-sm-2.col-md-2.col-lg-2
-          p Instructor Consent Req 
-    br
-    .row
-      .col-xs-12.col-sm-12.col-md-12.col-lg-12
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          button.btn.btn-xs.btn-primary(type='button') Add
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          p 2
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          p A02
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          p SEM
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          p MW
-        .col-xs-2.col-sm-2.col-md-2.col-lg-2
-          p 9:30-10:45AM
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          p 1
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          p AR 101
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          p Phan,C
-        .col-xs-2.col-sm-2.col-md-2.col-lg-2
-          p Instructor Consent Req    
-    br
-    .row
-      .col-xs-12.col-sm-12.col-md-12.col-lg-12
-        h4 Biology-(BIOL)
-        p Enrollment required for LEC,LAB in this group of sections.
-        h5 BIOL 102-Introduction To Biology (3Units) 
-    br
-    .row
-      .col-xs-12.col-sm-12.col-md-12.col-lg-12
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          b ADD
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          b SEC
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          b CODE
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          b TYPES
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          b DAYS
-        .col-xs-2.col-sm-2.col-md-2.col-lg-2
-          b TIME
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          b OPEN SEATS
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          b LOC
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          b INST
-        .col-xs-2.col-sm-2.col-md-2.col-lg-2
-          b COMMENTS
-    br
-    .row
-      .col-xs-12.col-sm-12.col-md-12.col-lg-12
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          button.btn.btn-xs.btn-primary(type='button') Add
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          p 1
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          p B01
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          p LEC
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          p TTh
-        .col-xs-2.col-sm-2.col-md-2.col-lg-2
-          p 8-9:15AM
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          p 5
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          p HS 101
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          p Clark,B
-        .col-xs-2.col-sm-2.col-md-2.col-lg-2
-          p Instr consent req.  
-    br
-    .row
-      .col-xs-12.col-sm-12.col-md-12.col-lg-12
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          button.btn.btn-xs.btn-primary(type='button') Add
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          p 2
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          p B02
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          p LAB
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          p TTh
-        .col-xs-2.col-sm-2.col-md-2.col-lg-2
-          p 9:30-10:45AM
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          p 4
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          p HS 101
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          p Majidz,H
-        .col-xs-2.col-sm-2.col-md-2.col-lg-2
-          p Must be enrolled in a LEC    
+        #accordion.panel-group
+          .panel.panel-default
+            .panel-heading
+              h2.panel-title
+                a(data-toggle="collapse", data-parent="#accordion", href="#collapseTwo")
+                  | Biology-(BIOL) 
+            #collapseTwo.panel-collapse.collapse
+              .panel-body
+              p Enrollment required for LEC,LAB in this group of sections.
+              h5 BIOL 102-Introduction To Biology (4Units)      
+              br
+              .row
+                .col-xs-12.col-sm-12.col-md-12.col-lg-12
+                  .col-xs-1.col-sm-1.col-md-1.col-lg-1
+                    b SEC
+                  .col-xs-1.col-sm-1.col-md-1.col-lg-1
+                    b CODE
+                  .col-xs-1.col-sm-1.col-md-1.col-lg-1
+                    b TYPES
+                  .col-xs-1.col-sm-1.col-md-1.col-lg-1
+                    b DAYS
+                  .col-xs-2.col-sm-2.col-md-2.col-lg-2
+                    b TIME
+                  .col-xs-1.col-sm-1.col-md-1.col-lg-1
+                    b OPEN SEATS
+                  .col-xs-1.col-sm-1.col-md-1.col-lg-1
+                    b LOC
+                  .col-xs-1.col-sm-1.col-md-1.col-lg-1
+                    b INST
+                  .col-xs-2.col-sm-2.col-md-2.col-lg-2
+                    b COMMENTS
+                  .col-xs-1.col-sm-1.col-md-1.col-lg-1
+                      if(user.type == 'student')
+                        b Add
+                      else
+                        b
+              br
+              .row
+                .col-xs-12.col-sm-12.col-md-12.col-lg-12
+                  .col-xs-1.col-sm-1.col-md-1.col-lg-1
+                    p 1
+                  .col-xs-1.col-sm-1.col-md-1.col-lg-1
+                    p B01
+                  .col-xs-1.col-sm-1.col-md-1.col-lg-1
+                    p SEM
+                  .col-xs-1.col-sm-1.col-md-1.col-lg-1
+                    p TTH
+                  .col-xs-2.col-sm-2.col-md-2.col-lg-2
+                    p 8-9:15AM
+                  .col-xs-1.col-sm-1.col-md-1.col-lg-1
+                    p 5
+                  .col-xs-1.col-sm-1.col-md-1.col-lg-1
+                    p HS 101
+                  .col-xs-1.col-sm-1.col-md-1.col-lg-1
+                    p Clark,B
+                  .col-xs-2.col-sm-2.col-md-2.col-lg-2
+                    p Instructor Consent Req 
+                  .col-xs-1.col-sm-1.col-md-1.col-lg-1
+                      if(user.type == 'student')
+                        button.btn.btn-xs.btn-primary(type='button') Add
+                      else
+                        b
+              br
+              .row
+                .col-xs-12.col-sm-12.col-md-12.col-lg-12
+                  .col-xs-1.col-sm-1.col-md-1.col-lg-1
+                    p 2
+                  .col-xs-1.col-sm-1.col-md-1.col-lg-1
+                    p B02
+                  .col-xs-1.col-sm-1.col-md-1.col-lg-1
+                    p LAB
+                  .col-xs-1.col-sm-1.col-md-1.col-lg-1
+                    p TTh
+                  .col-xs-2.col-sm-2.col-md-2.col-lg-2
+                    p 9:30-10:45AM
+                  .col-xs-1.col-sm-1.col-md-1.col-lg-1
+                    p 4
+                  .col-xs-1.col-sm-1.col-md-1.col-lg-1
+                    p AR 101
+                  .col-xs-1.col-sm-1.col-md-1.col-lg-1
+                    p Majidz,H
+                  .col-xs-2.col-sm-2.col-md-2.col-lg-2
+                    p Instructor Consent Req   
+                  .col-xs-1.col-sm-1.col-md-1.col-lg-1
+                      if(user.type == 'student')
+                        button.btn.btn-xs.btn-primary(type='button') Add
+                      else
+                        b 
     br
     .row
       .col-xs-12.col-sm-12.col-md-12.col-lg-12
         // should only be viewed by students 
-        h3 Students Only 
-        p note:should only be viewed by students 
-        button.btn.btn-lg.btn-primary.pull-left.disabled(type='button') Add Course 
-    br
-    .row
-      .col-xs-12.col-sm-12.col-md-12.col-lg-12
-        // should only be viewed by admin 
-        h3 Admin Only  
-        p note:should only be viewed by Admin-link to addcourse page 
-    br
-    .row
-      .col-xs-12.col-sm-12.col-md-12.col-lg-12
-        h3 General Info
-        p Click on the links below for general information 
-        a(href="http://www.titanbookstore.com/home.aspx", rel="nofollow") TextBooks
-        br
-        a(href="http://www.fullerton.edu/catalog/DegreeListing.aspx", rel="nofollow") Degree Listing
-        br 
-        a(href="http://localhost:3000/credentials/register", rel="nofollow") Registration
+        if(user.type == 'student')
+            button.btn.btn-lg.btn-primary.pull-left.disabled(type='button') Add Course 
+        else
+        b 
+
 
 // End Jade Template
