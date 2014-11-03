@@ -15,15 +15,15 @@ block content
       //-Columns in a row must equal 12. 
       .col-xs-12.col-sm-12.col-md-12.col-lg-12
         h1 #{title}
-        h3 Admin Only  
-        p note:should only be viewed by Admin 
+        h3 Admin Only
+        p note:Brandon needs to change the title from Add Class Schedule to Add Course Schedule
         br
         .row
           .col-xs-12.col-sm-12.col-md-12.col-lg-12
             form(role='form', method='POST', action='/catalog', id='register-form')
               h3 Add Course 
               .row
-                .col-xs-2.col-sm-2.col-md-2.col-lg-2
+                .col-xs-3.col-sm-3.col-md-3.col-lg-3
                   .input-group
                     .input-group-addon Course Name
                     input.form-control(name='course.name', placeholder='', type='input', required)
@@ -33,31 +33,35 @@ block content
                     input.form-control(name='schedule.section', placeholder='', type='number', required)
                 .col-xs-2.col-sm-2.col-md-2.col-lg-2
                   .input-group
-                    .input-group-addon Code
-                    input.form-control(name='course.code', placeholder='', type='input', required)
-                .col-xs-2.col-sm-2.col-md-2.col-lg-2
-                  .input-group
-                    .input-group-addon Types
-                    input.form-control(name='course.type', placeholder='', type='input', required)
-                .col-xs-2.col-sm-2.col-md-2.col-lg-2
-                  .input-group
-                    .input-group-addon Days
-                    input.form-control(name='daily', placeholder='', type='input', required)
-                .col-xs-2.col-sm-2.col-md-2.col-lg-2
-                  .input-group
-                    .input-group-addon Time
-                    input.form-control(name='time', placeholder='', type='input', required)
-              br
-              .row
-                .col-xs-2.col-sm-2.col-md-2.col-lg-2
-                  .input-group
                     .input-group-addon Open Seats
                     input.form-control(name='schedule.seats', placeholder='', type='number', required)
                 .col-xs-2.col-sm-2.col-md-2.col-lg-2
                   .input-group
+                      .input-group-btn
+                        button.btn.btn-default.dropdown-toggle(type="button", data-toggle="dropdown") 
+                          |Subject Code
+                          span.caret
+                        ul.dropdown-menu
+                          li Art 101
+                          li BIOL 102
+                .col-xs-2.col-sm-2.col-md-2.col-lg-2
+                  .input-group
+                      .input-group-btn
+                        button.btn.btn-default.dropdown-toggle(type="button", data-toggle="dropdown") 
+                          |Class Type
+                          span.caret
+                        ul.dropdown-menu
+                          li SEM
+                          li LEC
+                          li LAB
+  
+              br
+              .row
+                .col-xs-2.col-sm-2.col-md-2.col-lg-2
+                  .input-group
                     .input-group-addon Location
                     input.form-control(name='location', placeholder='', type='input', required)
-                .col-xs-2.col-sm-2.col-md-2.col-lg-2
+                .col-xs-3.col-sm-3.col-md-3.col-lg-3
                   .input-group
                     .input-group-addon Instructor
                     input.form-control(name='instructor', placeholder='', type='input', required) 
