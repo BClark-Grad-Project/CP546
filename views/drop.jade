@@ -36,7 +36,7 @@ block content
     br
     .row
       .col-xs-12.col-sm-12.col-md-12.col-lg-12
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
+        .col-xs-2.col-sm-2.col-md-2.col-lg-2
           b Course 
         .col-xs-1.col-sm-1.col-md-1.col-lg-1
           b SEC
@@ -50,14 +50,14 @@ block content
           b TIME
         .col-xs-1.col-sm-1.col-md-1.col-lg-1
           b UNITS 
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
+        .col-xs-2.col-sm-2.col-md-2.col-lg-2
           b LOC
         .col-xs-1.col-sm-1.col-md-1.col-lg-1
           b INST
     br
     .row
       .col-xs-12.col-sm-12.col-md-12.col-lg-12
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
+        .col-xs-2.col-sm-2.col-md-2.col-lg-2
           p Art 101
         .col-xs-1.col-sm-1.col-md-1.col-lg-1
           p 1
@@ -71,7 +71,7 @@ block content
           p 8-9:15AM
         .col-xs-1.col-sm-1.col-md-1.col-lg-1
           p 3
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
+        .col-xs-2.col-sm-2.col-md-2.col-lg-2
           p AR 101
         .col-xs-1.col-sm-1.col-md-1.col-lg-1
           p Phan,C
@@ -91,10 +91,11 @@ block content
               br 
               .row
                 .col-xs-12.col-sm-12.col-md-12.col-lg-12
-                  .col-xs-2.col-sm-2.col-md-2.col-lg-2
-                    button.btn.btn-lg.btn-primary.pull-left.disabled(type='button') Drop Courses
+                 if user.type == 'student'
+                  .col-xs-3.col-sm-3.col-md-3.col-lg-3
+                    button.btn.btn-lg.btn-primary.pull-left.primary(type='button') Drop Courses
                   .col-xs-1.col-sm-1.col-md-1.col-lg-1
-                    button.btn.btn-lg.btn-primary.pull-left.disabled(type='button') Cancel
+                    button.btn.btn-lg.btn-primary.pull-left.primary(type='button') Cancel
     br
     .row
       .col-xs-12.col-sm-12.col-md-12.col-lg-12
@@ -113,11 +114,12 @@ block content
                 input.form-control(name='comments', placeholder='', type='input', required)  
               br 
               .row
-                .col-xs-12.col-sm-12.col-md-12.col-lg-12
-                  .col-xs-2.col-sm-2.col-md-2.col-lg-2
-                    button.btn.btn-lg.btn-primary.pull-left.disabled(type='button') Drop Students
-                  .col-xs-1.col-sm-1.col-md-1.col-lg-1
-                    button.btn.btn-lg.btn-primary.pull-left.disabled(type='button') Cancel
+                if user.type == 'teacher'
+                  .col-xs-12.col-sm-12.col-md-12.col-lg-12
+                    .col-xs-3.col-sm-3.col-md-3.col-lg-3
+                      button.btn.btn-lg.btn-primary.pull-left.primary(type='button') Drop Students
+                    .col-xs-1.col-sm-1.col-md-1.col-lg-1
+                      button.btn.btn-lg.btn-primary.pull-left.primary(type='button') Cancel
  // note should have a restriction -cannot drop after 2 weeks: need to prompt student to go to admission to drop course          
     
 // End Jade Template
