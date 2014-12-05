@@ -26,7 +26,6 @@ module.exports = function (data) {
 				console.log('You are receiving an empty (schedule) Object', {schedule: {schedule:{code: ''}, course:{code:''}}});
 				res.render('addrequest', { title: 'University Manager | Add Class', user: req.session.user, schedule:{code:'', course:{code:''}}});
 			} else {
-				console.log('You are receiving the (schedule) Object', schedule);
 				res.render('addrequest', { title: 'University Manager | Add Class', user: req.session.user, schedule: schedule });
 			}
 		});

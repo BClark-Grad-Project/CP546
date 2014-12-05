@@ -17,7 +17,6 @@ module.exports = function (data) {
 						console.log(err);
 						next({error:err});
 					} else {
-						console.log('You are receiving the (catalog) Object', catalog);
 						res.render('catalog', { title: 'UM | Class Catalog', user: req.session.user, catalog: catalog });
 					}
 				});
@@ -34,7 +33,6 @@ module.exports = function (data) {
 				console.log('You are receiving a none registered course (schedule) Object', {user: req.session.user.id, session:{code:'Not Registered In Any Class'}, course: {code: 'None.'}});
 				res.render('schedule', { title: 'UM | My Schedule', user: req.session.user, schedule: {user: req.session.user.id, session:{code:'Not Registered In Any Class'}, course: {code: 'None.'}}});
 			} else {
-				console.log('You are receiving the (schedule) Object', data);
 				res.render('schedule', { title: 'UM | My Schedule', user: req.session.user, schedule: data });
 			}
 		});

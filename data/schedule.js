@@ -144,6 +144,17 @@ module.exports.getUserSchedule = function(req, cb){
 
 module.exports.addCourse = function(req, cb){
 
+	var daily = {};
+	daily.sun = req.body.sun;
+	daily.mon = req.body.mon;
+	daily.tue = req.body.tue;
+	daily.wed = req.body.wed;
+	daily.thur = req.body.thur;
+	daily.fri = req.body.fri;
+	daily.sat = req.body.sat;
+	console.log(daily, req.body);
+	
+	
 	db.open('user');
 	var schedule = new UserSchedule({
 		user:	req.body.id,
@@ -152,13 +163,7 @@ module.exports.addCourse = function(req, cb){
 			},
 	    schedule:{
 	    	id:			req.body.scheduleid,
-		    daily:       {sun:  Boolean(req.body.sun),
-				          mon:  Boolean(req.body.mon),
-				          tue:  Boolean(req.body.tue),
-				          wed:  Boolean(req.body.wed),
-				          thur: Boolean(req.body.thur),
-				          fri:  Boolean(req.body.fri),
-				          sat:  Boolean(req.body.sat)},
+		    daily:       daily,
 		    start_time:  req.body.start_time,
 		    min_length:  req.body.min_length,
 		    location:    req.body.location
@@ -178,9 +183,7 @@ module.exports.addCourse = function(req, cb){
 	
 	schedule.save(function (err) {
 		db.close();
-		console.log(schedule.getData());
         if (err){
-            console.log(err);
             return cb(err, null);
         }
         return cb(null, schedule.getData());
