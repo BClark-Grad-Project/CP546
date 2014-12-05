@@ -273,6 +273,22 @@ module.exports.getUserByEmail = function(email, cb){
 		});
 };
 
+
+module.exports.completeRegister = function(req, cb){
+
+	var updateData = {
+			type:'student',
+			active:true
+	};
+
+	db.open('user');
+	User.findOneAndUpdate({_id:req.body.id}, updateData, {}, function(err, user){
+		db.close();
+		if(err){return cb(err, null);}
+		return cb(null, user);
+	});
+};
+
 module.exports.getUserArrayByType = function (type, cb) {
 	var list = [];
 	
@@ -292,19 +308,21 @@ module.exports.getUserArrayByType = function (type, cb) {
 					.populate('transcripts contact')
 					.exec(function(err, details){
 						db.close();
+						var j = 0;
 						if (err) {cb(err, null);return;}
 						for (n in users){
 							if(details._id.toString() === list[n].detail.toString()){
 								list[n].detail = details.getData();
+								
+								if(n == list.length - 1){
+									cb(null, list);
+							    	return;			
+								}
 							}
 						}
 					});
 		    }	
-			console.log('User');
-			cb(null, list);
-		    return;			
 		});
-	return;	
 };
 
 /*

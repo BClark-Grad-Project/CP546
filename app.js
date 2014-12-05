@@ -12,7 +12,7 @@ var uuid = require('node-uuid');
 var routeHome = require('./routes/index')(data);
 var routeCatalog = require('./routes/catalog')(data);
 var routeStudent = require('./routes/student')(data);
-var routeUser = require('./routes/user')(data);
+var routeAccount = require('./routes/account')(data);
 var routeCredential = require('./routes/credentials')(data);
 
 var app = express();
@@ -53,16 +53,16 @@ function ensure(req, res, next){
 	if(req.secure){
 	  // OK, continue
 	  return next();
-	};
+	}
 	res.redirect('https://' + req.hostname + port + req.url); 
-};
+}
 app.all('*', ensure); // Top of routes. (Required to push HTTPS.)
 
 // Route to data manipulation and content
 app.use('/', routeHome);
 app.use('/catalog', routeCatalog);
 app.use('/student', routeStudent);
-app.use('/user', routeUser);
+app.use('/account', routeAccount);
 app.use('/credentials', routeCredential);
 
 // catch 404 and forward to error handler

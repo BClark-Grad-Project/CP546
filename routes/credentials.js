@@ -53,33 +53,30 @@ module.exports = function (data) {
 	}).post('/register', function(req, res) {
 		backURL=req.header('Referer') || '/';
 		res.redirect(backURL);
+	}).post('/register/complete', function (req, res, next){data.user.grant.Admin(req, res, next);},function(req, res) {
+		data.user.completeRegister(req, function(err, data){ 
+			res.redirect('/credentials/manage/users');
+		});
 	});
-	
+
 	/* GET/POST add page. */
-	router.get('/manage', function (req, res, next){data.user.grant.Admin(req, res, next);}, function(req, res, next) {
+	router.get('/manage/applications', function (req, res, next){data.user.grant.Admin(req, res, next);}, function(req, res, next) {
 			data.user.getUserArrayByType('pending', function (err, applicants) {
 				if(err){
 					console.log(err);
 					next(err);
 				} else {
 					console.log('You are receiving the (applicants) Object', applicants);
-					res.render('manageusers', { title: 'UM | Grant Credentials', user: req.session.user, applicants: applicants });
+					res.render('manageapplications', { title: 'UM | Grant Credentials', user: req.session.user, applicants: applicants });
 				}
 			});
-	}).post('/add', function (req, res, next){data.user.grant.Admin(req, res, next);}, function(req, res, next) {
-		// WRITE RECORD LOGIC GOES HERE
-		backURL=req.header('Referer') || '/';
-		res.redirect(backURL);
+	});
+
+	/* GET/POST add page. */
+	router.get('/manage/users', function (req, res, next){data.user.grant.Admin(req, res, next);}, function(req, res, next) {
+		res.render('manageusers', { title: 'UM | Grant Credentials', user: req.session.user });
 	});
 	
-	/* GET/POST deactivate page. */
-	router.get('/deactivate', function (req, res, next){data.user.grant.Admin(req, res, next);}, function(req, res, next) {
-		res.redirect('/credentials/manage');
-	}).post('/deactivate', function (req, res, next){data.user.grant.Admin(req, res, next);}, function(req, res, next) {
-		// WRITE RECORD LOGIC GOES HERE
-		backURL=req.header('Referer') || '/';
-		res.redirect(backURL);
-	});
 	
 	return router;
 };
