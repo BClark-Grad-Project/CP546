@@ -63,7 +63,7 @@ module.exports.userCurrentSessionSchedule = function (req, cb) {
 
 		db.open('user');
 		UserSchedule
-			.find({user: req.session.user.id, 'session.code': catalog})
+			.find({user: req.session.user.id, active: true, 'session.code': catalog})
 			.populate({ path: 'user', select: '_id first last' })
 			.exec(function(err, history){
 				if(err){cb(err, null);return;}
@@ -129,7 +129,6 @@ module.exports.getUserCourseHistory = function (req, cb){
 
 module.exports.getUserSchedule = function(req, cb){
 	db.open('user');
-	console.log(req.body.grab);
 	UserSchedule
 		.findOne({_id:req.body.grab})
 		.exec(function(err, data){
@@ -140,4 +139,67 @@ module.exports.getUserSchedule = function(req, cb){
 			cb(null, data.getData());
 			return;
 		});
+};
+
+
+module.exports.addCourse = function(req, cb){
+
+	db.open('user');
+	var schedule = new UserSchedule({
+		user:	req.body.id,
+	    session:    {
+			code: req.body.sessioncode
+			},
+	    schedule:{
+	    	id:			req.body.scheduleid,
+		    daily:       {sun:  Boolean(req.body.sun),
+				          mon:  Boolean(req.body.mon),
+				          tue:  Boolean(req.body.tue),
+				          wed:  Boolean(req.body.wed),
+				          thur: Boolean(req.body.thur),
+				          fri:  Boolean(req.body.fri),
+				          sat:  Boolean(req.body.sat)},
+		    start_time:  req.body.start_time,
+		    min_length:  req.body.min_length,
+		    location:    req.body.location
+	    },
+	    units:       req.body.units,
+	    instructor:  req.body.instructor,
+	    seats:       req.body.seats,
+	    course:      {
+	    	id:		 req.body.courseid,
+  	      code:      req.body.coursecode,
+  		  name:      req.body.coursename,
+  		  instructor: {first: req.body.instructorfirst,
+  			           last:  req.body.instructorlast} },
+  		active:  true,
+		activity:''
+	});
+	
+	schedule.save(function (err) {
+		db.close();
+		console.log(schedule.getData());
+        if (err){
+            console.log(err);
+            return cb(err, null);
+        }
+        return cb(null, schedule.getData());
+    });
+	
+	
+};
+
+module.exports.dropCourse = function(req, cb){
+	var updateData = {
+			activity:req.body.reason,
+			active:false
+	};
+
+	db.open('user');
+	UserSchedule.findOneAndUpdate({_id:req.body.id}, updateData, {}, function(err, user){
+		db.close();
+		console.log(err, user);
+		if(err){return cb(err, null);}
+		return cb(null, user);
+	});
 };

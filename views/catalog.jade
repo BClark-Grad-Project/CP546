@@ -9,22 +9,11 @@ link(rel='stylesheet',href='/css/mycss.css')
   
 //-JavaScript will be inserted at the end of the BODY tag.
 block js
-  script(src='/js/catalog.js')
-
-//-Add navigation item to existing navigation set.
-block nav
-  
-//-Add navigation item to existing Administrator navigation set.
-block navAdmin
-  
-//-Add navigation item to existing Teacher navigation set.
-block navTeacher
-  
-//-Add navigation item to existing Student navigation set.
-block navStudent
+  script(src='/js/catalog.js')  
   
 //-HTML content to display.
 block content
+  script(src='/js/catalog.js')
   section#main.container
     .row
       //-Columns in a row must equal 12. 
@@ -89,23 +78,7 @@ block content
                             .col-xs-1.col-sm-1.col-md-1.col-lg-1
                               p SEM
                             .col-xs-1.col-sm-1.col-md-1.col-lg-1
-                              //-This is not working correctly
-                              - var daily = ''
-                              if j.daily.mon == true
-                                - var mon = 'M '
-                              if j.daily.tue == true
-                                - var tue = 'T '
-                              if j.daily.wed == true
-                                - var wed = 'W '
-                              if j.daily.thurs == true
-                                - var thurs = 'Th '
-                              if j.daily.fri == true
-                                - var fri = 'F '
-                              if j.daily.sat == true
-                                - var sat = 'S '
-                              if j.daily.sun == true
-                                - var sun = 'Sun '
-                              p #{mon} #{tue} #{wed} #{thurs} #{fri} #{sat} #{sun}
+                              p #{getDays(j.daily)}
                             .col-xs-2.col-sm-2.col-md-2.col-lg-2
                               p #{j.start_time.getHours()} 
                                 if j.start_time.getMinutes() != 0

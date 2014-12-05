@@ -20,13 +20,11 @@ block content
     .row
       //-Columns in a row must equal 12. 
       .col-xs-12.col-sm-12.col-md-12.col-lg-12
-        h1 #{title}
-        p Welcome #{user.first}
-        h3 Added Courses Summary
+        h2 Courses Summary of Class Addition
     br
     .row
       .col-xs-12.col-sm-12.col-md-12.col-lg-12  
-        h3 #{schedule.session} 
+        h3 Adding Course for #{schedule.session} 
     br
     .row
       .col-xs-12.col-sm-12.col-md-12.col-lg-12
@@ -39,68 +37,53 @@ block content
         .col-xs-1.col-sm-1.col-md-1.col-lg-1
           b TIME
         .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          b SEAT
-        .col-xs-2.col-sm-2.col-md-2.col-lg-2
-          b LOC
+          b UNITS
         .col-xs-1.col-sm-1.col-md-1.col-lg-1
+          b LOC
+        .col-xs-2.col-sm-2.col-md-2.col-lg-2
           b INST
         
     br
     .row
       .col-xs-12.col-sm-12.col-md-12.col-lg-12
         .col-xs-2.col-sm-2.col-md-2.col-lg-2
-          p CIS-010
+          p #{schedule.course.subject.code}-#{schedule.course.code}
         .col-xs-1.col-sm-1.col-md-1.col-lg-1
           p SEM
         .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          p T
+          p #{getDays(schedule.daily)}
         .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          p 3:00
+          p #{schedule.start_time.getHours()} 
+              if schedule.start_time.getMinutes() != 0
+              | : #{schedule.start_time.getMinutes()}
         .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          p 32
+          p #{schedule.course.units}
+        .col-xs-1.col-sm-1.col-md-1.col-lg-1
+          p #{schedule.location}
         .col-xs-2.col-sm-2.col-md-2.col-lg-2
-          p IT013
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          p C.Teacher
-        
-    br
+          p #{schedule.instructor.first} #{schedule.instructor.last}
     .row
       .col-xs-12.col-sm-12.col-md-12.col-lg-12
-        .col-xs-2.col-sm-2.col-md-2.col-lg-2
-          p CIS-110
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          p SEM
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          p T-F
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          p 4:30
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          p 32
-        .col-xs-2.col-sm-2.col-md-2.col-lg-2
-          p IT011
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          p C.Teacher
-    br
-    .row
-      .col-xs-12.col-sm-12.col-md-12.col-lg-12
-        .col-xs-2.col-sm-2.col-md-2.col-lg-2
-          p MIS-110
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          p SEM
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          p M
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          p 1:00
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          p 30
-        .col-xs-2.col-sm-2.col-md-2.col-lg-2
-          p IT011
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          p C.Teacher
-    br 
-    .row
-      .col-xs-12.col-sm-12.col-md-12.col-lg-12
-        .col-xs-3.col-sm-3.col-md-3.col-lg-3
-          button.btn.btn-lg.btn-primary.pull-left.primary(type='button') Confirm
+        form(action='/student/add/complete', method='POST')
+          input.form-control(type='hidden', value=user.id, name='id')
+          input.form-control(type='hidden', value=schedule.session, name='sessioncode')
+          input.form-control(type='hidden', value=schedule.course.id, name='courseid')
+          input.form-control(type='hidden', value=schedule.course.subject.code + '-' + schedule.course.code, name='coursecode')
+          input.form-control(type='hidden', value=schedule.course.name, name='coursename')
+          input.form-control(type='hidden', value=schedule.instructor.first, name='instructorfirst')
+          input.form-control(type='hidden', value=schedule.instructor.last, name='instructorlast')
+          input.form-control(type='hidden', value=schedule.id, name='scheduleid')
+          input.form-control(type='hidden', value=schedule.daily.sun, name='sun')
+          input.form-control(type='hidden', value=schedule.daily.mon, name='mon')
+          input.form-control(type='hidden', value=schedule.daily.tue, name='tue')
+          input.form-control(type='hidden', value=schedule.daily.wed, name='wed')
+          input.form-control(type='hidden', value=schedule.daily.thur, name='thur')
+          input.form-control(type='hidden', value=schedule.daily.fri, name='fri')
+          input.form-control(type='hidden', value=schedule.daily.sat, name='sat')
+          input.form-control(type='hidden', value=schedule.start_time, name='start_time')
+          input.form-control(type='hidden', value=schedule.min_length, name='min_length')
+          input.form-control(type='hidden', value=schedule.location, name='location')
+          button.btn.btn-lg.btn-primary.pull-left(type='submit', style='margin:20px;') Confirm  
+          button.btn.btn-lg.pull-left.btn-default(type='button', style='margin:20px;') Cancel  
           
 // End Jade Template

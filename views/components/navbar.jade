@@ -2,6 +2,7 @@ include ../mixins/navigation.jade
 - user = typeof(user) != 'undefined' ? user : { first: 'Guest',	last: 'User', type: 'default' }
 - school = typeof(school) != 'undefined' ? school : { }
 - var monthNames = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+- function getDays(obj){var days = '';if (obj.mon == true) days += 'M ';if (obj.tue == true) days += 'T ';if (obj.wed == true) days += 'W ';if (obj.thur == true) days += 'Th '; if (obj.fri == true) days += 'F ';if (obj.sat == true) days += 'S ';if (obj.sun == trrue) days += 'Sun ';return days;};
 
 nav.navbar.navbar-default(role='navigation')
   .container-fluid

@@ -30,6 +30,10 @@ module.exports = function (data) {
 				res.render('addrequest', { title: 'University Manager | Add Class', user: req.session.user, schedule: schedule });
 			}
 		});
+	}).post('/add/complete', function (req, res, next){data.user.grant.Student(req, res, next);}, function(req, res, next) {
+		data.schedule.addCourse(req, function(err, schedule){
+			res.redirect('/catalog');
+		});
 	});
 	
 	/* GET/POST drop to schedule page. */
@@ -44,6 +48,12 @@ module.exports = function (data) {
 				console.log('You are receiving the (schedule) Object', schedule);
 				res.render('drop', { title: 'UM | Confirm Drop Class', user: req.session.user, schedule: schedule });
 			}
+		});
+	}).post('/drop/complete', function (req, res, next){data.user.grant.Student(req, res, next);}, function(req, res, next) {
+		console.log('working drop');
+		data.schedule.dropCourse(req, function(err, schedule){
+			console.log('done drop');
+			res.redirect('/catalog');
 		});
 	});
 	

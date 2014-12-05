@@ -17,9 +17,9 @@ block content
           +userHeader()
         .col-xs-12.col-sm-12.col-md-9.col-lg-10
           h3(style="margin-top:0px;") Edit Profile
-          +userNameFields(user.detail)
+          +userNameFields(user)
           +userDetail(user.detail)
-          +userContact(user.contact)
+          +userContact(user.detail.contact)
           if useraccount
             +adminProfileOptions()
           +saveEdits()

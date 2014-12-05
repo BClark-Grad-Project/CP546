@@ -17,6 +17,7 @@ var ScheduleSchema = mongoose.Schema({
                   ref:  User.schema},
     start_time:  {type: Date},
     min_length:  {type: Number},
+    units:  {type: Number},
     seats:       {type: Number},
     location:    {type: String},
     course:      {type: mongoose.Schema.Types.ObjectId,

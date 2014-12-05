@@ -1,3 +1,44 @@
+mixin userHeader()
+  .row
+    .media
+      .media-left.profile-image.col-xs-4.col-sm-4.col-md-12.col-lg-12
+        +userIcon()
+        a.profile-image-btn(data-target='#profile-image-change', data-toggle='modal')
+          img(src='/images/user/profile-image-btn.png')
+      .media-body.col-xs-8.col-sm-8.col-md-12.col-lg-12(style='padding-left: 25px;padding-right:25px;')
+        br
+        h3.media-heading #{user.user.name.charAt(0).toUpperCase() + user.user.name.slice(1)} 
+        if user.type == 'admin'
+          h5 Administrator
+        else if user.type == 'user'
+          h5 Standard User
+        hr
+        br        
+        i Please do not falsify information if you choose to provide it.
+  block
+
+mixin idField(name, id)
+  if id != undefined
+    input.form-control(name=name + 'Id', type='hidden', value=id)
+
+mixin userNameFields(data)
+  - data = data ? data : {first: '', last: ''};
+  #user-name.col-xs-12.col-sm-12.col-md-12.col-lg-12.collapse.fade.in.active(style='margin:0px;padding:0px;')
+    .col-xs-12.col-sm-12.col-md-12.col-lg-12
+      h5
+        b Real Name
+    .col-xs-12.col-sm-12.col-md-6.col-lg-6
+      .input-group
+        .input-group-addon First &nbsp; &nbsp;
+        input.form-control(name='first', type='input', value=data.first)
+      br
+    .col-xs-12.col-sm-12.col-md-6.col-lg-6
+      .input-group
+        .input-group-addon Last &nbsp; &nbsp;
+        input.form-control(name='last', type='input', value=data.last)
+      br
+    
+
 mixin navItem(target, title)
   li
     a(href=target) #{title}
@@ -9,11 +50,7 @@ mixin adminNav()
   +navItem('/catalog/addschedule', 'Add Schedule')
   +navItem('/catalog/addcourse', 'Add Course')
   li.divider
-  +navItem('/credentials/manage/users', 'Manage Users')
-  li.divider
   +navItem('/credentials/manage/applications', 'Manage Applications')
-  li.divider
-  +navItem('/account/edit', 'My Profile')  
   block adminNav
   
 mixin studentNav()
@@ -24,8 +61,6 @@ mixin studentNav()
   li.dropdown-header Course Management
   +navItem('/student/add', 'Add Course')
   +navItem('/student/drop', 'Drop Course')
-  li.divider
-  +navItem('/account/edit', 'My Profile')
   block studentNav
     
 mixin teacherNav()
@@ -36,8 +71,6 @@ mixin teacherNav()
   li.dropdown-header Manage Students
   +navItem('/student/history', 'Student History')
   +navItem('/student/drop', 'Drop Student')
-  li.divider
-  +navItem('/account/edit', 'My Profile')
   block teachNav
 
 mixin pendingNav()
@@ -204,13 +237,6 @@ mixin contactAddress(data)
           input.form-control(name='zip' + data.type, type='input', value=data.zip)
         br
   
-mixin contactMobile(data)
-  .col-xs-6.col-sm-7.col-md-7.col-lg-7(style='padding:0px;')
-    .input-group
-      .input-group-addon Carrier  &nbsp; 
-      input.form-control(name='carrier' + data.type, type='input', value=data.carrier)
-    br
-  +contactPhone(data)
 
 mixin homeContactFields(data)
   #contact-home.tab-pane.fade.in.active(role='tabpanel')
@@ -219,42 +245,20 @@ mixin homeContactFields(data)
     +contactAddress(data)
     h6 Telephone
     +contactPhone(data)
-
-mixin officeContactFields(data)
-  #contact-office.tab-pane.fade(role='tabpanel')
-    +idField(data.type, data.id)
-    h6 Mailing
-    +contactAddress(data)
-    h6 Telephone
-    +contactPhone(data)
     
-mixin mobileContactFields(data)
-  #contact-mobile.tab-pane.fade(role='tabpanel')
-    +idField(data.type, data.id)
-    h6 Mobile Information
-    +contactMobile(data)
-
 mixin userContact(data)
   - var contactObj = function(type){return {type:type, addr:'', addr_2:'', city:'', state:'', zip:'', phone:'', carrier:'', ext:''};};
-  - data = data ? data : [contactObj('home'), contactObj('office'), contactObj('mobile')];
+  - data = data ? data : [contactObj('home')];
   #user-contact.col-xs-12.col-sm-12.col-md-12.col-lg-12.collapse.fade.in.active(role='tablist')
     h5
       b Contacts 
     ul.nav.nav-tabs
       li.active(role='presentation')
         a(href='#contact-home', aria-controls='Home Contact', role='tab', data-toggle='tab') Home
-      li(role='presentation')
-        a(href='#contact-office', aria-controls='Office Contact', role='tab', data-toggle='tab') Office
-      li(role='presentation')
-        a(href='#contact-mobile', aria-controls='Mobile Contact', role='tab', data-toggle='tab') Mobile
     .col-xs-12.col-sm-12.col-md-12.col-lg-12.tab-content(style='padding-top:10px;')
       for i in data
         if i.type == 'home'
           +homeContactFields(i)        
-        if i.type == 'office'
-          +officeContactFields(i)
-        if i.type == 'mobile'
-          +mobileContactFields(i)
   
 mixin registerAcceptButtons()
   .col-xs-12.col-sm-12.col-md-12.col-lg-12
