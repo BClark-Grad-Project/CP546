@@ -44,11 +44,7 @@ mixin navItem(target, title)
     a(href=target) #{title}
     
 mixin adminNav()
-  li.dropdown-header Administrator Menu  
-  li.divider  
-  li.dropdown-header Catalog Management
-  +navItem('/catalog/addschedule', 'Add Schedule')
-  +navItem('/catalog/addcourse', 'Add Course')
+  li.dropdown-header Administrator Menu
   li.divider
   +navItem('/credentials/manage/applications', 'Manage Applications')
   block adminNav
