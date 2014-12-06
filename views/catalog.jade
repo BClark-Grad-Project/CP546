@@ -19,9 +19,7 @@ block content
       //-Columns in a row must equal 12. 
       .col-xs-12.col-sm-12.col-md-12.col-lg-12
         h1 #{title}
-        h3 View the Courses by Sessions (Semesters)
-        p The catalog displays courses by sessions. Please click on each sessions in order to view the courses. 
-          | Click the expand button in order to expand the listing of the courses.
+        p Click the expand button in order to expand the listing of the courses.
      // start grid for images 
      br
     .row
@@ -80,9 +78,7 @@ block content
                             .col-xs-1.col-sm-1.col-md-1.col-lg-1
                               p #{getDays(j.daily)}
                             .col-xs-2.col-sm-2.col-md-2.col-lg-2
-                              p #{j.start_time.getHours()} 
-                                if j.start_time.getMinutes() != 0
-                                  | : #{j.start_time.getMinutes()}
+                              +timeFrame(j.start_time, j.min_length)
                             .col-xs-1.col-sm-1.col-md-1.col-lg-1
                               p #{j.seats}
                             .col-xs-1.col-sm-1.col-md-1.col-lg-1

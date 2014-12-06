@@ -201,7 +201,6 @@ module.exports.dropCourse = function(req, cb){
 	db.open('user');
 	UserSchedule.findOneAndUpdate({_id:req.body.id}, updateData, {}, function(err, user){
 		db.close();
-		console.log(err, user);
 		if(err){return cb(err, null);}
 		return cb(null, user);
 	});

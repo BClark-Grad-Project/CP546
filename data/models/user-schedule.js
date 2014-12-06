@@ -33,7 +33,7 @@ UserScheduleSchema.methods.getData = function(){
 	return {
 		id:       this._id,
         user:     this.user,
-        sesseion: this.session,
+        session: this.session,
         course:   this.course,
         schedule: this.schedule,
         active:   this.active,

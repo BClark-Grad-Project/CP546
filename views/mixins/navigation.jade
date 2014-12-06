@@ -17,6 +17,35 @@ mixin userHeader()
         i Please do not falsify information if you choose to provide it.
   block
 
+mixin timeFrame(date, length)
+  p 
+    if date.getHours() > 12
+      | #{date.getHours() - 12}
+      if date.getMinutes() != 0
+        | :#{date.getMinutes()}PM
+      else
+        | PM
+    else
+      | #{date.getHours()} 
+      if date.getMinutes() != 0
+        | :#{date.getMinutes()}AM
+      else
+        | AM
+    - var endClass = date;
+    - endClass.setMinutes(endClass.getMinutes() + length);
+    if endClass.getHours()  > 12
+      | -#{endClass.getHours() - 12}
+      if endClass.getMinutes() != 0
+        | :#{endClass.getMinutes()}PM
+      else
+        | PM
+    else
+      | -#{endClass.getHours()}
+      if endClass.getMinutes() != 0
+        | :#{endClass.getMinutes()}AM
+      else
+        | AM
+
 mixin idField(name, id)
   if id != undefined
     input.form-control(name=name + 'Id', type='hidden', value=id)

@@ -26,12 +26,13 @@ module.exports = function (data) {
 				console.log('You are receiving an empty (schedule) Object', {schedule: {schedule:{code: ''}, course:{code:''}}});
 				res.render('addrequest', { title: 'University Manager | Add Class', user: req.session.user, schedule:{code:'', course:{code:''}}});
 			} else {
+				console.log('You are receiving the (schedule) Object', schedule);
 				res.render('addrequest', { title: 'University Manager | Add Class', user: req.session.user, schedule: schedule });
 			}
 		});
 	}).post('/add/complete', function (req, res, next){data.user.grant.Student(req, res, next);}, function(req, res, next) {
 		data.schedule.addCourse(req, function(err, schedule){
-			res.redirect('/catalog');
+			res.redirect('/catalog/schedule');
 		});
 	});
 	
@@ -49,10 +50,8 @@ module.exports = function (data) {
 			}
 		});
 	}).post('/drop/complete', function (req, res, next){data.user.grant.Student(req, res, next);}, function(req, res, next) {
-		console.log('working drop');
 		data.schedule.dropCourse(req, function(err, schedule){
-			console.log('done drop');
-			res.redirect('/catalog');
+			res.redirect('/catalog/schedule');
 		});
 	});
 	

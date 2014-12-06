@@ -11,17 +11,7 @@ block js
   script(src='/js/myschedule.js')
   script(type='text/javascript').
     var schedule = !{JSON.stringify(schedule)}
-  
-//-Add navigation item to existing navigation set.
-block nav
-  +navItem('#main','My schedule')
-  
-//-Add navigation item to existing Teacher navigation set.
-block navTeacher
-  
-//-Add navigation item to existing Student navigation set.
-block navStudent
-  
+    
 //-HTML content to display.
 block content
   - var currentClassList;
@@ -44,59 +34,56 @@ block content
             button.dropListBtn.btn.btn-primary(type="button") Drop Student
             button.viewHistoryListBtn.btn.btn-primary(type="button") View Class History
   section#main.container
-    .row
-      //-Columns in a row must equal 12. 
-      .col-xs-12.col-sm-12.col-md-12.col-lg-12
-        h1 #{title}
-        p Student Name-Student ID 
-        h4 Current Schedule (Fall 2014:8/26-12/15)   
-    br
-    .row
-        .col-xs-2.col-sm-2.col-md-2.col-lg-2
-          b COURSE 
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          b TYPES
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          b DAYS
-        .col-xs-2.col-sm-2.col-md-2.col-lg-2
-          b TIME
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          b UNITS 
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          b LOC
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-            if(user.type =='student' || user.type == 'admin')
-              b Instructor
-            else
-              b
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          b 
-      - var j = 0;
-      for i in schedule
-        br
-        .row
-          .col-xs-12.col-sm-12.col-md-12.col-lg-12
-            .col-xs-2.col-sm-2.col-md-2.col-lg-2
-              p #{i.course.code}
-            .col-xs-1.col-sm-1.col-md-1.col-lg-1
-              p SEM
-            .col-xs-1.col-sm-1.col-md-1.col-lg-1
-              p #{getDays(i.schedule.daily)}
-            .col-xs-2.col-sm-2.col-md-2.col-lg-2
-              p #{i.schedule.start_time.getHours()}
-                if i.schedule.start_time.getMinutes() != 0
-                  | :#{i.schedule.start_time.getMinutes()}
-            .col-xs-1.col-sm-1.col-md-1.col-lg-1
-              p 3
-            .col-xs-1.col-sm-1.col-md-1.col-lg-1
-              p #{i.schedule.location}
-            .col-xs-1.col-sm-1.col-md-1.col-lg-1
-                if(user.type =='student' || user.type == 'admin')
-                  p #{i.course.instructor.first} #{i.course.instructor.last} 
-                else
-                  p TBA
-            .col-xs-1.col-sm-1.col-md-1.col-lg-1
-              if(user.type == 'student')
-                button.dropBtn.btn.btn-xs.btn-primary(type='button', value=i.id) Drop
-            - j++; 
+    if schedule.length
+      .row
+        //-Columns in a row must equal 12. 
+        .col-xs-12.col-sm-12.col-md-12.col-lg-12
+          h1 #{title}
+          h4 #{schedule[0].session.description} (#{schedule[0].session.code}) 
+          p #{user.first} #{user.last} (#{user.id}) 
+      br
+      .row
+          .col-xs-2.col-sm-2.col-md-2.col-lg-2
+            b Course
+          .col-xs-1.col-sm-1.col-md-1.col-lg-1
+            b Types
+          .col-xs-1.col-sm-1.col-md-1.col-lg-1
+            b Days
+          .col-xs-2.col-sm-2.col-md-2.col-lg-2
+            b Time
+          .col-xs-1.col-sm-1.col-md-1.col-lg-1
+            b Location
+          .col-xs-2.col-sm-2.col-md-2.col-lg-2
+              if(user.type =='student' || user.type == 'admin')
+                b Instructor
+              else
+                b
+          .col-xs-1.col-sm-1.col-md-1.col-lg-1
+            b 
+        - var j = 0;
+        for i in schedule
+          br
+          .row
+            .col-xs-12.col-sm-12.col-md-12.col-lg-12
+              .col-xs-2.col-sm-2.col-md-2.col-lg-2
+                p #{i.course.code}
+              .col-xs-1.col-sm-1.col-md-1.col-lg-1
+                p SEM
+              .col-xs-1.col-sm-1.col-md-1.col-lg-1
+                p #{getDays(i.schedule.daily)}
+              .col-xs-2.col-sm-2.col-md-2.col-lg-2
+                +timeFrame(i.schedule.start_time, i.schedule.min_length)
+              .col-xs-1.col-sm-1.col-md-1.col-lg-1
+                p #{i.schedule.location}
+              .col-xs-2.col-sm-2.col-md-2.col-lg-2
+                  if(user.type =='student' || user.type == 'admin')
+                    p #{i.course.instructor.first} #{i.course.instructor.last} 
+                  else
+                    p TBA
+              .col-xs-1.col-sm-1.col-md-1.col-lg-1
+                if(user.type == 'student')
+                  button.dropBtn.btn.btn-xs.btn-primary(type='button', value=i.id) Drop
+              - j++; 
+    else
+      p You are not registered for any courses this class session.
 // End Jade Template
