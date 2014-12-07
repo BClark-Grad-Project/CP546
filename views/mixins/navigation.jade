@@ -339,3 +339,43 @@ mixin saveEdits()
   .col-xs-12.col-sm-12.col-md-12.col-lg-12
     button.btn.btn-primary.btn-lg.pull-right(type='submit') Save 
     button.btn.btn-default.btn-lg.pull-right(type='reset', style='margin-right: 10px;') Undo 
+     
+mixin FeaturesAd()       
+  #carousel-example-generic.carousel.slide(data-ride="carousel", style='border-radius:15px;')
+    ol.carousel-indicators
+      li.active(data-target="#carousel-example-generic", data-slide-to="0")
+      li(data-target="#carousel-example-generic", data-slide-to="1")
+      li(data-target="#carousel-example-generic", data-slide-to="2")
+      li(data-target="#carousel-example-generic", data-slide-to="3")
+      li(data-target="#carousel-example-generic", data-slide-to="4")
+    .carousel-inner(role="listbox", style='border-radius:15px;')
+      .item.active(style='border-radius:15px;')
+        img(src='/images/1.png')
+        .container
+          .carousel-caption
+            h1 University Manager
+            h4 Try it today!
+      .item
+        img(src='/images/1.png')
+        .container
+          .carousel-caption
+            h1 Catalog Management
+            h5 Create curriculum with subjects and courses and assign to teachers and facilities for catalog sessions.
+      .item
+        img(src='/images/1.png')
+        .container
+          .carousel-caption
+            h1 Student Registration Management
+            h5 Students can register to attend University, add and drop courses that they have been approved. 
+      .item
+        img(src='/images/1.png')
+        .container
+          .carousel-caption
+            h1 Teacher Management
+            h5 Teachers can drop students whom fail to meet course prerequisites.
+      .item
+        img(src='/images/1.png')
+        .container
+          .carousel-caption
+            h1 User Management
+            h5 Administators approve or deny new student applications, add new users or deactivate accounts.
