@@ -22,25 +22,25 @@ mixin timeFrame(date, length)
     if date.getHours() > 12
       | #{date.getHours() - 12}
       if date.getMinutes() != 0
-        | :#{date.getMinutes()}PM
+        | :#{date.getMinutes()}PM 
       else
-        | PM
+        | PM 
     else
-      | #{date.getHours()} 
+      | #{date.getHours()}
       if date.getMinutes() != 0
-        | :#{date.getMinutes()}AM
+        | :#{date.getMinutes()}AM 
       else
-        | AM
+        | AM 
     - var endClass = date;
     - endClass.setMinutes(endClass.getMinutes() + length);
     if endClass.getHours()  > 12
-      | -#{endClass.getHours() - 12}
+      | to #{endClass.getHours() - 12}
       if endClass.getMinutes() != 0
         | :#{endClass.getMinutes()}PM
       else
         | PM
     else
-      | -#{endClass.getHours()}
+      | to #{endClass.getHours()}
       if endClass.getMinutes() != 0
         | :#{endClass.getMinutes()}AM
       else

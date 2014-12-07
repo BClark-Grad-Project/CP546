@@ -28,13 +28,13 @@ module.exports.getCourseSchedule = function (req, cb){
 			
 			courseSchedule = schedule.getData();
 			Course
-				.findOne({_id:schedule.course})
+				.findOne({_id:courseSchedule.course})
 				.exec(function(err, course){
 					if(err){cb(err, null);return;}
 
 					courseSchedule.course = course.getData();
 					Subject
-						.findOne({_id:course.subject})
+						.findOne({_id:courseSchedule.course.subject})
 						.exec(function(err, subject){
 							db.close();
 							if(err){cb(err, null);return;}
@@ -182,11 +182,19 @@ module.exports.addCourse = function(req, cb){
 	});
 	
 	schedule.save(function (err) {
-		db.close();
+        db.close();
         if (err){
             return cb(err, null);
         }
-        return cb(null, schedule.getData());
+        db.open('school');
+        Schedule
+        	.findOneAndUpdate({_id:req.body.scheduleid},{$inc: {registered: 1}},{},function(err, data){
+            	db.close();
+        		if (err){
+                    return cb(err, null);
+                }
+        		return cb(null, schedule.getData());
+        	});
     });
 	
 	
@@ -202,6 +210,15 @@ module.exports.dropCourse = function(req, cb){
 	UserSchedule.findOneAndUpdate({_id:req.body.id}, updateData, {}, function(err, user){
 		db.close();
 		if(err){return cb(err, null);}
-		return cb(null, user);
+
+        db.open('school');
+        Schedule
+        	.findOneAndUpdate({_id:user.schedule.id},{$inc: {registered: -1}},{},function(err, data){
+            	db.close();
+        		if (err){
+                    return cb(err, null);
+                }
+        		return cb(null, user.getData());
+        	});
 	});
 };

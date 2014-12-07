@@ -26,11 +26,73 @@ module.exports.getCurrent = function (cb) {
 	});
 };
 
+function courseIndexOf(o, arr) {
+
+    for (var i = 0; i < arr.length; i++) {
+    	console.log(arr[i].course, o, arr[i].course.toString() == o);
+        if (arr[i].course.toString() == o) {
+            return i;
+        }
+    }
+}
+
+var getCourse = function(id, cb){
+	Course
+		.findOne({_id:id})
+		.populate('subject')
+		.exec(function(err, course){
+			if(err){return cb(err,null);}	
+			return cb(null, course.getData());
+		});
+};
+
+var getCourses = function(schedulesObj, cb){
+	var courses = [];
+	//console.log(schedulesObj);
+	for(var i in schedulesObj){
+		var j = 0;
+		getCourse(schedulesObj[i].course, function(err, course){
+			if(err){return cb(err,null);}
+			courses.push(course);
+			
+			if(j == i){
+				return cb(null, courses);
+			}
+			j++;
+		});
+	}
+};
+
+var getCourseInstructor = function(id, cb){
+	User.getUserById(id, function(err, teacher){
+		if(err){return cb(err,null);}	
+		
+		return cb(null, teacher);
+	});
+};
+
+var getCourseInstructors = function(schedulesObj, cb){
+	//console.log(schedulesObj);
+	for(i in schedulesObj){
+		var j = 0;
+		getCourseInstructor(schedulesObj[i].instructor, function(err, instructor){
+			console.log(err, instructor);
+			if(err){return cb(err,null);}	
+			schedulesObj[j].instructor = instructor;
+			if(i == j){
+				return cb(null, schedulesObj);
+			}
+			j++;
+		});
+	}
+};
+
+
 module.exports.getCatalog = function (id, cb) {
 	var catalog;
 	var subjects = [];
 	function isSubject(name){
-	  for(n in subjects){
+	  for(var n in subjects){
 	    if(subjects[n].code == name.code){
 	      return true;
 	    }
@@ -39,8 +101,8 @@ module.exports.getCatalog = function (id, cb) {
 	}
 	var getSubjects = function (schedules){
 	  for(var n = 0; n < schedules.length; n++){
-	    if(!isSubject(schedules[n].course.subject)){
-	      subjects.push(schedules[n].course.subject);
+	    if(!isSubject(schedules[n].subject)){
+	      subjects.push(schedules[n].subject);
 	    }
 	  }
 	  return subjects;
@@ -57,46 +119,35 @@ module.exports.getCatalog = function (id, cb) {
 			Schedule
 				.find({session:catalog.code})
 				.exec(function(err, schedules){
-					db.close();
 					if(err){cb(err,null);return;}
 					
-					for(i in schedules){
-						catalog.schedule[i] = schedules[i].getData();
+					for(var n in schedules){
+						if(schedules[n]){
+							catalog.schedule[n] = schedules[n].getData();
+						}
 					}
-					
-					//console.log(catalog);
-					db.open('school');
-					for(i in schedules){
-						var j = 0;
-						Course
-							.findOne({_id:schedules[i].course})
-							.populate('subject')
-							.exec(function(err, course){
-								if(err){cb(err,null);return;}
-								catalog.schedule[j].course = course;
-								j++;
-								if( j == schedules.length ){
-									db.close();
-									catalog.subjects = getSubjects(catalog.schedule);
-									var k = 0 ;
-									db.open('user');
-									for(z in schedules){
-										User.getUserById(catalog.schedule[z].instructor, function(err, teacher){
-											catalog.schedule[k].instructor = teacher;
-											
-											k++;
-											if( k == schedules.length ){
-												//console.log(catalog.schedule);
-												db.close();
-												cb(null, catalog);
-												return;
-											}
-										});
-									}
-								}
-							});
-					}	
-					
+
+					getCourses(catalog.schedule, function(err, courses){
+						db.close();
+						if(err){return cb(err,null);}
+						db.open('user');
+						console.log(courses);
+						for(var i in courses){
+							console.log(i, courses[i].id);
+							var pos = courseIndexOf(courses[i].id, catalog.schedule);
+							console.log(pos);
+							catalog.schedule[pos].course = courses[i];
+						}
+						//console.log(courses, catalog);
+						catalog.subjects = getSubjects(courses);
+						getCourseInstructors(catalog.schedule,function(err, schedule){
+							db.close();
+							if(err){return cb(err,null);}
+							
+							catalog.schedule = schedule;
+							return cb(null, catalog);
+						});
+					});					
 				});
 		});
 };

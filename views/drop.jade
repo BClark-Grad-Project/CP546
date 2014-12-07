@@ -29,34 +29,29 @@ block content
     br
     .row
       .col-xs-12.col-sm-12.col-md-12.col-lg-12  
-        h3 #{schedule.session} Drop Detail 
+        h3 #{schedule.session.code} Drop Detail 
     .row
       .col-xs-12.col-sm-12.col-md-12.col-lg-12
         .col-xs-2.col-sm-2.col-md-2.col-lg-2
           b Code
         .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          b TYPES
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          b DAYS
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          b TIME
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          b UNITS
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          b LOC
+          b Days
         .col-xs-2.col-sm-2.col-md-2.col-lg-2
-          b INST
-        
+          b Time
+        .col-xs-1.col-sm-1.col-md-1.col-lg-1
+          b Units
+        .col-xs-1.col-sm-1.col-md-1.col-lg-1
+          b Location
+        .col-xs-2.col-sm-2.col-md-2.col-lg-2
+          b Instructor
     br
     .row
       .col-xs-12.col-sm-12.col-md-12.col-lg-12
         .col-xs-2.col-sm-2.col-md-2.col-lg-2
           p #{schedule.course.code}
         .col-xs-1.col-sm-1.col-md-1.col-lg-1
-          p SEM
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
           p #{getDays(schedule.schedule.daily)}
-        .col-xs-1.col-sm-1.col-md-1.col-lg-1
+        .col-xs-2.col-sm-2.col-md-2.col-lg-2
           +timeFrame(schedule.schedule.start_time, schedule.schedule.min_length)
         .col-xs-1.col-sm-1.col-md-1.col-lg-1
           p #{schedule.course.units}

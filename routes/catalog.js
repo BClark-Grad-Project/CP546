@@ -17,6 +17,12 @@ module.exports = function (data) {
 						console.log(err);
 						next({error:err});
 					} else {
+
+						console.log('You are receiving a none registered course (schedule) Object', catalog.schedule[0]);
+						console.log('You are receiving a none registered course (schedule) Object', catalog.schedule[1]);
+						console.log('You are receiving a none registered course (schedule) Object', catalog.schedule[2]);
+						console.log('You are receiving a none registered course (schedule) Object', catalog.schedule[3]);
+						console.log('You are receiving a none registered course (schedule) Object', catalog.schedule[4]);
 						res.render('catalog', { title: 'UM | Class Catalog', user: req.session.user, catalog: catalog });
 					}
 				});
