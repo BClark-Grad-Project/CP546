@@ -109,7 +109,7 @@ module.exports.Detail = function(req, contact, transcripts){
 module.exports.User = function(req, detail){
 	var user = new User();
 	var email    = req.body.email_user;
-	var password = (req.body.password === undefined) ? user.generateHash('newaccountbyadmin') : user.generateHash(req.body.password);
+	var password = (req.body.pass === undefined) ? user.generateHash('newaccountbyadmin') : user.generateHash(req.body.pass);
 	var first    = req.body.first_user;
 	var last     = req.body.last_user;
 	var type     = (req.body.type === undefined) ? 'pending' : req.body.type;
