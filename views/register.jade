@@ -37,7 +37,6 @@ block content
                   option(value='decline') Decline
                   option(value='male') Male
                   option(value='female') Female
-              br
               h4 Age
               .input-group.col-xs-2.col-sm-2.col-md-2.col-lg-2
                 .input-group-addon Birth
@@ -209,23 +208,28 @@ block content
               br
               h3 Higher Education Transcripts
               p Please provide any information you can about your previous college experience.  Official transcripts need to be recieved three months prior to the begining of the Fall 2014 session.
+              br
               button#add-transcript.btn.btn-primary.btn-xs(type='button', data-loading-text='Adding Record...') 
                 | + Add Transcript
               br
               br
               #college-transcripts
+                - var pos = 0;
+                script(type='text/javascript').
+                  var pos = !{JSON.stringify(pos)}
                 input.form-control(name='transcript_college_record_number', value='1', type='hidden')
-                .row
-                  .col-xs-12.col-sm-12.col-md-12.col-lg-12.list-group-item
-                    .col-xs-4.col-sm-4.col-md-4.col-lg-4
-                      .input-group
-                        .input-group-addon GPA 
-                        input.form-control(name='gpa_transcript_1', placeholder='', type='input')
-                    .col-xs-7.col-sm-7.col-md-7.col-lg-7
-                      .input-group
-                        .input-group-addon School
-                        input.form-control(name='school_transcript_1', placeholder='', type='input')
-                    .col-xs-1.col-sm-1.col-md-1.col-lg-1.middle
-                      span.badge 1
+                .row 
+              hr
+              h5 Please create a secure password:
+              .row
+                .col-xs-12.col-sm-12.col-md-12.col-lg-12     
+                  .col-xs-6.col-sm-6.col-md-6.col-lg-6 
+                    .input-group
+                      .input-group-addon Password 
+                      input.form-control(name='pass', type='password', required)
+                  .col-xs-6.col-sm-6.col-md-6.col-lg-6
+                    .input-group
+                      .input-group-addon Re-Type
+                      input.form-control(name='pass_2', type='password', required)
               br
               button#submit-application.btn.btn-lg.btn-primary.pull-right(type='submit',data-loading-text='Sending Application...') Send Application Now!
