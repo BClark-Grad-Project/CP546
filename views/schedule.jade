@@ -110,15 +110,9 @@ block content
                 small #{i.course.instructor.first.charAt(0)}. #{i.course.instructor.last} 
             .col-xs-1.col-sm-1.col-md-1.col-lg-1
               if user.type == 'student'
-<<<<<<< HEAD
                 button.dropBtn.btn.btn-xs.btn-warning(type='button', value=i.id) Drop Course
               else if user.type == 'teacher'
                 button.studentsBtn.btn.btn-xs.btn-warning(value=j, type='button',data-toggle="modal", data-target="#student-list") Student Roll
-=======
-                button.dropBtn.btn.btn-xs.btn-primary(type='button', value=i.id) Drop Course
-              else if user.type == 'teacher'
-                button.studentsBtn.btn.btn-xs.btn-primary(value=j, type='button',data-toggle="modal", data-target="#student-list") Student Roll
->>>>>>> c11169c566d23daef10efdf450c92a3c6f09b598
         br
     else
       p You are not registered for any courses this class session.
