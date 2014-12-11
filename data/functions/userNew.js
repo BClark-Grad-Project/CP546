@@ -112,7 +112,7 @@ module.exports.User = function(req, detail){
 	var password = (req.body.pass === undefined) ? user.generateHash('newaccountbyadmin') : user.generateHash(req.body.pass);
 	var first    = req.body.first_user;
 	var last     = req.body.last_user;
-	var type     = (req.body.type === undefined) ? 'pending' : req.body.type;
+	var type     = (req.body.type === undefined) ? 'applicant' : req.body.type;
 	var active   = (req.body.active === undefined) ? false : true ;
 	user = new User({
         email:      email,

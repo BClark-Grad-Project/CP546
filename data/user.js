@@ -274,11 +274,25 @@ module.exports.getUserByEmail = function(email, cb){
 };
 
 
-module.exports.completeRegister = function(req, cb){
+module.exports.approveRegister = function(req, cb){
 
 	var updateData = {
 			type:'student',
 			active:true
+	};
+
+	db.open('user');
+	User.findOneAndUpdate({_id:req.body.id}, updateData, {}, function(err, user){
+		db.close();
+		if(err){return cb(err, null);}
+		return cb(null, user);
+	});
+};
+
+module.exports.declineRegister = function(req, cb){
+
+	var updateData = {
+			active:false
 	};
 
 	db.open('user');
@@ -294,7 +308,7 @@ module.exports.getUserArrayByType = function (type, cb) {
 	
 	db.open('user');
 	User
-		.find({type:type})
+		.find({type:type, active:true})
 		.exec(function(err,users){
 			if (err) {cb(err, null);return;}
 			
@@ -321,7 +335,11 @@ module.exports.getUserArrayByType = function (type, cb) {
 							}
 						}
 					});
-		    }	
+		    }
+			if(!list.length){
+				cb(null, list);
+		    	return;			
+			}
 		});
 };
 

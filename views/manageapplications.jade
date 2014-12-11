@@ -1,15 +1,16 @@
 // Begin Jade template.
 extends layout
 
+include ./mixins/manage-application.jade
+
+block css
+  link(rel='stylesheet', href='/css/manage-application.css')
+  
 //-JavaScript will be inserted at the end of the BODY tag.
 block js
   script(src='/js/manage-application.js')
   script(type='text/javascript').
     var data = !{JSON.stringify(applicants)}
-//-Add navigation item to existing navigation set.
-block nav
-  li
-    a(href='#collapseTwo') Approve
 
 //-HTML content to display.
 block content
@@ -26,45 +27,11 @@ block content
               h4.panel-title
                 a(data-toggle='collapse', data-parent='#accordion', href='#collapseTwo')
                   | Approve Student Registration
-            #collapseTwo.panel-collapse.collapse.fade.in
+            if applicants.length
+              +appManager()
+            else
               .panel-body
-                form(role='form', method='POST', action='/credentials/register/complete', id='approve-register-form')
-                  .row
-                    .col-xs-6.col-sm-6.col-md-6.col-lg-6.left-list
-                      h4 Approvals
-                      br
-                      select.form-control#userlist(multiple, size='24')
-                        - var j = 0;
-                        for n in applicants
-                          // tmp for populated college history students.
-                          if (n.type === 'pending')
-                            option(value=j) #{n.first} #{n.last}
-                            - j++; 
-                    .col-xs-6.col-sm-6.col-md-6.col-lg-6.right-list
-                      input#userid.form-control(type='hidden', name='id')
-                      h4 Applicant Information
-                      br
-                      h5 Name
-                      p#userName User name
-                      br
-                      h5 Contact
-                      h6 Phone
-                      p#userPhone None
-                      h6 Email
-                      p#userEmail None
-                      br
-                      h5 Permenent Address
-                      h6 Address
-                      p#userAddr None
-                      p#userAddr2 
-                      .row
-                        .col-xs-8.col-sm-8.col-md-8.col-lg-8
-                          h6 State
-                          p#userState 
-                        .col-xs-4.col-sm-4.col-md-4.col-lg-4
-                          h6 Zip
-                        p#userZip 
-                  br
-                  button.btn.btn-lg.btn-primary.pull-right(type='submit') Approve
+                .col-xs-12.col-sm-12.col-md-12.col-lg-12
+                  small There are currently no applications to approve.
 
 // End Jade Template

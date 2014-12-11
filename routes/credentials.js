@@ -53,22 +53,25 @@ module.exports = function (data) {
 	}).post('/register', function(req, res) {
 		backURL=req.header('Referer') || '/';
 		res.redirect(backURL);
-	}).post('/register/complete', function (req, res, next){data.user.grant.Admin(req, res, next);},function(req, res) {
-		data.user.completeRegister(req, function(err, data){ 
-			res.redirect('/credentials/manage/users');
+	}).post('/register/approve', function (req, res, next){data.user.grant.Admin(req, res, next);},function(req, res) {
+		data.user.approveRegister(req, function(err, data){ 
+			res.redirect('/credentials/manage/applications');
+		});
+	}).post('/register/decline', function (req, res, next){data.user.grant.Admin(req, res, next);},function(req, res) {
+		data.user.declineRegister(req, function(err, data){ 
+			res.redirect('/credentials/manage/applications');
 		});
 	});
 
 	/* GET/POST add page. */
 	router.get('/manage/applications', function (req, res, next){data.user.grant.Admin(req, res, next);}, function(req, res, next) {
-			data.user.getUserArrayByType('pending', function (err, applicants) {
+			data.user.getUserArrayByType('applicant', function (err, applicants) {
 				if(err){
 					console.log(err);
 					next(err);
-				} else {
-					console.log('You are receiving the (applicants) Object', applicants);
-					res.render('manageapplications', { title: 'UM | Grant Credentials', user: req.session.user, applicants: applicants });
 				}
+				console.log('You are receiving the (applicants) Object', applicants);
+				res.render('manageapplications', { title: 'UM | Grant Credentials', user: req.session.user, applicants: applicants });
 			});
 	});
 

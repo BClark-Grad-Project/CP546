@@ -11,8 +11,7 @@ var userSchema = mongoose.Schema({
     type:       {type: String, required: true},
     active:     {type: String, required: true},
     detail:     {type: mongoose.Schema.Types.ObjectId,
-                 ref:  'UserDetail'},
-    joined:     {type: Date, default: Date.now}
+                 ref:  'UserDetail'}
 });
 
 // generating a hash
@@ -38,8 +37,7 @@ userSchema.methods.getData = function(){
 	    last:       this.last,
 	    type:       this.type,
 	    active:     this.active,
-	    detail:     [this.detail],
-	    joined:     this.joined
+	    detail:     [this.detail]
 	};
 };
 

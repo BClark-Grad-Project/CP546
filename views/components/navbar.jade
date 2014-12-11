@@ -41,8 +41,8 @@ nav.navbar.navbar-default(role='navigation')
               +studentNav()
               li.divider
               +navItem('/credentials/signout','Sign Out')
-            else if (user.type == 'pending')
-              +pendingNav()
+            else if (user.type == 'applicant')
+              +applicantNav()
               li.divider
               +navItem('/credentials/signout','Sign Out')
             else

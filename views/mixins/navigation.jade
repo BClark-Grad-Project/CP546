@@ -98,9 +98,12 @@ mixin teacherNav()
   +navItem('/student/drop', 'Drop Student')
   block teachNav
 
-mixin pendingNav()
+mixin applicantNav()
   li.dropdown-header Student Applicant
-  +navItem('#status-pending', 'Application processing...')
+  if user.active == 'true'
+    +navItem('#status-pending', 'Application processing...')
+  else  
+    +navItem('#status-pending', 'Application DECLINED')
   
 div(class='modal fade', id='login-form', tabindex='-1', role='dialog', aria-labelledby='loginLabel', aria-hidden='true')
   div(class='modal-dialog modal-sm')
@@ -131,7 +134,7 @@ div(class='modal fade', id='login-form', tabindex='-1', role='dialog', aria-labe
               input(type='checkbox', name='remember')
               | Remember me
         div(class='modal-footer')
-          button(type='submit', class='btn btn-lg btn-block') Submit
+          button(type='submit', class='btn btn-lg btn-block btn-warning') Submit
 
 mixin signIn()
   a(role='menuitem', tabindex='-1', data-toggle='modal', data-target='#login-form') Sign In
@@ -299,7 +302,7 @@ mixin registerAcceptButtons()
       .col-xs-6.col-sm-6.col-md-6.col-lg-6(style='padding:0px 10px 0px 0px;')
         button.btn.btn-lg.btn-default.pull-right(type='button', data-dismiss='modal', style='width:100%;') Cancel
       .col-xs-6.col-sm-6.col-md-6.col-lg-6(style='padding:0px 0px 0px 10px;')
-        button.btn.btn-lg.btn-primary.pull-right(type='submit', style='width:100%;') Register
+        button.btn.btn-lg.btn-warning.pull-right(type='submit', style='width:100%;') Register
         
 mixin selectProfilePhoto()
   .btn.btn-primary.btn-file.btn-lg.pull-right

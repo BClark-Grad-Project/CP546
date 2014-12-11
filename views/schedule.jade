@@ -31,8 +31,8 @@ block content
               option None
           .modal-footer
             button.btn.btn-default(type="button", data-dismiss="modal") Close
-            button.dropListBtn.btn.btn-primary(type="button") Drop Student
-            button.viewHistoryListBtn.btn.btn-primary(type="button") View Class History
+            button.dropListBtn.btn.btn-warning(type="button") Drop Student
+            button.viewHistoryListBtn.btn.btn-warning(type="button") View Class History
   section#main.container
     if schedule.length
       .row
@@ -110,9 +110,9 @@ block content
                 small #{i.course.instructor.first.charAt(0)}. #{i.course.instructor.last} 
             .col-xs-1.col-sm-1.col-md-1.col-lg-1
               if user.type == 'student'
-                button.dropBtn.btn.btn-xs.btn-primary(type='button', value=i.id) Drop Course
+                button.dropBtn.btn.btn-xs.btn-warning(type='button', value=i.id) Drop Course
               else if user.type == 'teacher'
-                button.studentsBtn.btn.btn-xs.btn-primary(value=j, type='button',data-toggle="modal", data-target="#student-list") Student Roll
+                button.studentsBtn.btn.btn-xs.btn-warning(value=j, type='button',data-toggle="modal", data-target="#student-list") Student Roll
         br
     else
       p You are not registered for any courses this class session.
