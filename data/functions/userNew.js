@@ -113,7 +113,7 @@ module.exports.User = function(req, detail){
 	var first    = req.body.first_user;
 	var last     = req.body.last_user;
 	var type     = (req.body.type === undefined) ? 'applicant' : req.body.type;
-	var active   = (req.body.active === undefined) ? false : true ;
+	var active   = (req.body.active === undefined) ? true : false;
 	user = new User({
         email:      email,
         password:   password,
