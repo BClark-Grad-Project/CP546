@@ -1,9 +1,9 @@
 var mongoose = require('mongoose');
 var db = require('./db-locations');
 
+var Update = require('./update');
 var newUser = require('./functions/userNew');
 
-// Models
 var User = require('./models/user');
 var UserDetail = require('./models/user-detail');
 var UserContact = require('./models/user-contact');
@@ -18,6 +18,100 @@ var guestCheckIn = function(req){
 	var sess = req.session;
 	sess.user = {first: 'Guest', last: 'User', type: 'guest'};
 };
+
+var mergeProfile = function(obj1,obj2){
+    var obj3 = {};
+    for (var attrname in obj1) { obj3[attrname] = obj1[attrname]; }
+    for (var attrname in obj2) { obj3[attrname] = obj2[attrname]; }
+    return obj3;
+};
+
+var editProfile = function(userObj, cb){
+	var profile = {};
+	console.log('start edit ', userObj);
+	if(userObj.user){
+		Update.user(userObj.user, function(err, userSaved){
+			if(err){return cb(err, null);}
+			profile.user = userSaved;
+			
+			if(userObj.contact){
+				Update.contactList(userObj.contact, function(err, contactsSaved){
+					if(err){return cb(err, null);}
+					
+					profile.contact = contactsSaved;
+					if(userObj.detail){
+						Update.detail(userObj.detail, function(err, detailSaved){
+							if(err){return cb(err, null);}
+							profile.detail = detailSaved;
+							delete profile.detail.user;
+							
+							return cb(null, profile);
+						});
+					} else {
+						return cb(null, profile);
+					}
+				});
+			} else if(userObj.detail) {
+				Update.detail(userObj.detail, function(err, detailSaved){
+					if(err){return cb(err, null);}					
+					profile.detail = detailSaved;
+					delete profile.detail.user;
+					
+					return cb(null, profile);
+				});
+			} else {
+				return cb(null, profile);
+			}
+		});
+	} else if(userObj.contact){
+		Update.contactList(userObj.contact, function(err, contactsSaved){
+			if(err){return cb(err, null);}
+			profile.contact = contactsSaved;
+			
+			if(userObj.detail){
+				Update.detail(userObj.detail, function(err, detailSaved){
+					if(err){return cb(err, null);}
+					profile.detail = detailSaved;
+					delete profile.detail.user;
+					
+					return cb(null, profile);
+				});
+			} else {
+				return cb(null, profile);
+			}
+		});
+	} else {
+		if(userObj.detail){
+			Update.detail(userObj.detail, function(err, detailSaved){
+				if(err){return cb(err, null);}
+				profile.detail = detailSaved;
+				delete profile.detail.user;
+				
+				return cb(null, profile);
+			});
+		} else {
+			return cb(null, profile);
+		}
+	} 
+};
+
+
+module.exports.updateProfile = function(sess, userObj, cb){
+	db.open('user');
+		editProfile(userObj, function(err, user){
+			db.close();
+			if(err){return cb(err, null);}
+			
+			if(sess == null){
+				user = mergeProfile(userObj, user);
+			}else {
+				sess.user = mergeProfile(sess.user, user);
+			}
+			console.log('end update', user);
+			return cb(null, user);
+		});
+};
+
 
 module.exports.userCheck = function(req, res, next){
 	if(!req.session.user){
@@ -103,20 +197,17 @@ module.exports.deauthenticate = function (req, res, cb){
 module.exports.getUserById = function(id, cb){
 	
 	var profile = [];
-	
 	//search for user object
-	User
-		.findOne({_id:id})
+	User.findOne({_id:id})
 		.exec(function(err, user){
-			if (err){cb(err, null);return;}
-			
+			if (err){return cb(err, null);}
 			if(user){
 				profile = user.getData();
 				// search for detail object
 				
 				if(user.detail){
 					UserDetail
-						.findOne({detail:user.detail._id})
+						.findOne({_id:user.detail})
 						.exec(function(err, details){
 							if (err) {cb(err, null);return;}
 							
@@ -129,58 +220,53 @@ module.exports.getUserById = function(id, cb){
 							for (n in details.contact){
 								if(n == 0) {contactId.push(details.contact[n]);}
 							}
-							console.log(profile);
-							for(var i =0;i<details.contact.length; i++){
-								UserContact
-									.find({_id:contactId[i]})
-									.exec(function(err, contact){	
-										if (err) {cb(err, null);return;}
-										
-										for(n in contact){
-											profile.detail.contact.push(contact[n].getData());
-										}
-									});
-							}
-							// search for transcript history object
-							if(details.transcripts){
-								UserTranscriptHistory
-									.findOne({_id:details.transcripts})
-									.exec(function(err, history){
-										if (err) {cb(err, null);return;}
-										
-										profile.detail.transcripts = history.getData();
-										
-										//search for college transcript objects
-										var transcriptId = [];
-										profile.detail.transcripts.college = [];
-										for (var i = 0; i < history.college.length; i++){
-											transcriptId.push(history.college[i]);
-										}
-										for(var j = 0; j < transcriptId.length; j++){
-											UserTranscript
-												.findOne({_id:transcriptId[j]})
-												.exec(function(err, transcripts){
+							UserContact
+								.findOne({_id:contactId[0]})
+								.exec(function(err, contact){	
+									if (err) {cb(err, null);return;}
+										profile.detail.contact.push(contact.getData());
+										// search for transcript history object
+										if(details.transcripts){
+											UserTranscriptHistory
+												.findOne({_id:details.transcripts})
+												.exec(function(err, history){
 													if (err) {cb(err, null);return;}
+				
 													
-													profile.detail.transcripts.college.push(transcripts.getData());
+													profile.detail.transcripts = history.getData();
+													
+													//search for college transcript objects
+													var transcriptId = [];
+													profile.detail.transcripts.college = [];
+													for (var i = 0; i < history.college.length; i++){
+														transcriptId.push(history.college[i]);
+													}
+													for(var j = 0; j < transcriptId.length; j++){
+														UserTranscript
+															.findOne({_id:transcriptId[j]})
+															.exec(function(err, transcripts){
+																if (err) {cb(err, null);return;}
+				
+																profile.detail.transcripts.college.push(transcripts.getData());
+															});
+													}
+													
+													// search for ge transcript object
+													UserTranscript
+														.findOne({_id:history.general})
+														.exec(function(err, ge){
+															if (err) {cb(err, null);return;}
+															
+															profile.detail.transcripts.general = ge.getData();
+															cb(null, profile);
+															return;
+														});
 												});
+										} else {
+											cb(null, profile);
+											return;
 										}
-										
-										// search for ge transcript object
-										UserTranscript
-											.findOne({_id:history.general})
-											.exec(function(err, ge){
-												if (err) {cb(err, null);return;}
-												
-												profile.detail.transcripts.general = ge.getData();
-												cb(null, profile);
-												return;
-											});
-									});
-							} else {
-								cb(null, profile);
-								return;
-							}
+								});
 							});
 				} else {
 					cb(null, profile);
@@ -342,29 +428,3 @@ module.exports.getUserArrayByType = function (type, cb) {
 			}
 		});
 };
-
-/*
-module.exports.edit = function (cb) {
-	db.open('user', function(err){
-		if(err !== undefined){cb(err);}
-	});
-	
-	
-	db.close();
-};
-
-module.exports.admin = function (cb) {
-	db.open('user', function(err){
-		
-	backURL=req.header('Referer') || '/';
-	res.redirect(backURL);{cb(err);}
-	});
-	
-	
-	db.close();
-};
-
-module.exports.isUser = function (cb) {
-	
-};
-*/

@@ -3,14 +3,14 @@ extends layout
 
 block css
   link(rel='stylesheet', href='/css/profile.css')
-    
+
 //-HTML content to display.
 block content
   if useraccount
     - user = useraccount;
   section#main.container
     - var action = !useraccount ? '/account/edit' : '/account/edit/' + useraccount.id;
-    form(role='form', method='POST', action=action, id='edit-profile-form')
+    form(role='form', method='POST', action=action, id='edit-profile-form', name='edit-profile-form')
       include ./components/profile-edit-form.jade
       .row
         .col-xs-12.col-sm-12.col-md-3.col-lg-2
@@ -19,12 +19,12 @@ block content
           h3(style="margin-top:0px;") Edit Profile
           +userNameFields(user)
           +userDetail(user.detail)
+          - console.log(user.detail);
           +userContact(user.detail.contact)
           if useraccount
             +adminProfileOptions()
           +saveEdits()
-                    
-                    
+
 block js
   script(src='/js/profile.js')
   script(type='text/javascript').

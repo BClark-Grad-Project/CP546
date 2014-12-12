@@ -1,29 +1,17 @@
 $(document).ready(function(){
-	function toggleSubmit(form, toggle){
-		$(form + ' button[type=submit]').disable(toggle);
-	}	
 	$('#edit-profile-form :input[name=gender]').val(data.detail.gender);	
-	$('#edit-profile-form :input[name=auth_type]').val(data.user.type);	
-	// Contact state field propagate. 
-	for(var i in data.contact){
-		$('#edit-profile-form select[name=state'+ data.contact[i].type +']').val(data.contact[i].state);
-	}
-	toggleSubmit('#edit-profile-form', true);
-	
+	$('#edit-profile-form :input[name=auth_type]').val(data.type);	
+	$('#edit-profile-form select[name=statehome]').val(data.detail.contact[0].state);
 
 	// Register Form Validation
 	var validateUserFields = {
 			realname: function(){
 				var first = $('input[name=first]').val() == data.detail.first;
-				var middle = $('input[name=middle]').val() == data.detail.middle;
 				var last = $('input[name=last]').val() == data.detail.last;
 				
 				if(!first){
 					return false;
 				}
-				if(!middle){
-					return false;
-				} 
 				if(!last){
 					return false;
 				} 				
@@ -130,86 +118,36 @@ $(document).ready(function(){
 			}
 	};
 
-	$(':input[name=first], :input[name=middle], :input[name=last]').on('keyup change', function(){
+	$(':input[name=first], :input[name=last]').on('keyup change', function(){
 		var userName = validateUserFields.realname();
-		if(userName){
-			toggleSubmit('#edit-profile-form', true);
-		} else {
-			toggleSubmit('#edit-profile-form', false);
-		}
 	});
 
 	$('input[name=phonehome], input[name=phoneoffice], input[name=phonemobile], input[name=extoffice], input[name=carriermobile]').on('keyup change', function(){
 		var phone = validateUserFields.phone();
-		if(phone){
-			toggleSubmit('#edit-profile-form', true);
-		} else {
-			toggleSubmit('#edit-profile-form', false);
-		}
 	});
 
 	$(':input[name=addrhome], :input[name=addroffice], :input[name=addr_2home], :input[name=addr_2office]').on('keyup change', function(){
 		var addr = validateUserFields.addrLine();
-		if(addr){
-			toggleSubmit('#edit-profile-form', true);
-		} else {
-			toggleSubmit('#edit-profile-form', false);
-		}
 	});
 	$(':input[name=zipoffice], :input[name=ziphome]').on('keyup change', function(){
 		var zip = validateUserFields.zip();
-		if(zip){
-			toggleSubmit('#edit-profile-form', true);
-		} else {
-			toggleSubmit('#edit-profile-form', false);
-		}
 	});
 	$(':input[name=statehome], :input[name=stateoffice]').on('keyup change', function(){
 		var state = validateUserFields.state();
-		if(state){
-			toggleSubmit('#edit-profile-form', true);
-		} else {
-			toggleSubmit('#edit-profile-form', false);
-		}
 	});
 	$(':input[name=cityhome], :input[name=cityoffice]').on('keyup change', function(){
 		var city = validateUserFields.city();
-		if(city){
-			toggleSubmit('#edit-profile-form', true);
-		} else {
-			toggleSubmit('#edit-profile-form', false);
-		}
 	});
 	$(':input[name=birth]').on('keyup change', function(){
 		var birth = validateUserFields.birth();
-		if(birth){
-			toggleSubmit('#edit-profile-form', true);
-		} else {
-			toggleSubmit('#edit-profile-form', false);
-		}
 	});
 	$(':input[name=gender]').on('keyup change', function(){
 		var gender = validateUserFields.gender();
-		if(gender){
-			toggleSubmit('#edit-profile-form', true);
-		} else {
-			toggleSubmit('#edit-profile-form', false);
-		}
 	});
 	$(':input[name=auth_active]').on('keyup change', function(){
 		var active = validateUserFields.active();
-		if(active){
-			toggleSubmit('#edit-profile-form', true);
-		} else {
-			toggleSubmit('#edit-profile-form', false);
-		}
 	});
 	$(':input[name=auth_type]').on('keyup change', function(){
 		var type = validateUserFields.type();
-		if(type){
-			toggleSubmit('#edit-profile-form', true);
-		} else {
-			toggleSubmit('#edit-profile-form', false);
-		}
 	});
 });

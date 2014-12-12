@@ -1,17 +1,16 @@
 mixin userHeader()
   .row
     .media
-      .media-left.profile-image.col-xs-4.col-sm-4.col-md-12.col-lg-12
-        +userIcon()
-        a.profile-image-btn(data-target='#profile-image-change', data-toggle='modal')
-          img(src='/images/user/profile-image-btn.png')
       .media-body.col-xs-8.col-sm-8.col-md-12.col-lg-12(style='padding-left: 25px;padding-right:25px;')
-        br
-        h3.media-heading #{user.user.name.charAt(0).toUpperCase() + user.user.name.slice(1)} 
         if user.type == 'admin'
-          h5 Administrator
-        else if user.type == 'user'
-          h5 Standard User
+          h5 Administrator User ID
+        else if user.type == 'student'
+          h5 Student User ID
+        else if user.type == 'teacher'
+          h5 Teacher User ID
+        else if user.type == 'applicant'
+          h5 Student Applicant User ID
+        small #{user.id}
         hr
         br        
         i Please do not falsify information if you choose to provide it.
@@ -52,6 +51,7 @@ mixin idField(name, id)
 
 mixin userNameFields(data)
   - data = data ? data : {first: '', last: ''};
+  +idField('detail', data.detail.id)
   #user-name.col-xs-12.col-sm-12.col-md-12.col-lg-12.collapse.fade.in.active(style='margin:0px;padding:0px;')
     .col-xs-12.col-sm-12.col-md-12.col-lg-12
       h5
@@ -75,6 +75,10 @@ mixin navItem(target, title)
 mixin adminNav()
   li.dropdown-header Administrator Menu
   li.divider
+  +navItem('/account', 'My Profile')
+  li.divider
+  li.dropdown-header Management
+  +navItem('/credentials/manage/users', 'Manage Users')
   +navItem('/credentials/manage/applications', 'Manage Applications')
   block adminNav
   
@@ -82,6 +86,7 @@ mixin studentNav()
   li.dropdown-header Student Menu
   li.divider  
   +navItem('/catalog/schedule', 'My Schedule')
+  +navItem('/account', 'My Profile')
   li.divider  
   li.dropdown-header Course Management
   +navItem('/student/add', 'Add Course')
@@ -92,6 +97,7 @@ mixin teacherNav()
   li.dropdown-header Teacher Menu
   li.divider  
   +navItem('/catalog/schedule', 'My Schedule')
+  +navItem('/account', 'My Profile')
   li.divider
   li.dropdown-header Manage Students
   +navItem('/student/history', 'Student History')
@@ -104,6 +110,7 @@ mixin applicantNav()
     +navItem('#status-pending', 'Application processing...')
   else  
     +navItem('#status-pending', 'Application DECLINED')
+  +navItem('/account', 'My Profile')
   
 div(class='modal fade', id='login-form', tabindex='-1', role='dialog', aria-labelledby='loginLabel', aria-hidden='true')
   div(class='modal-dialog modal-sm')
@@ -141,7 +148,7 @@ mixin signIn()
   
   
 mixin userDetail(data)
-  - data = data ? data : {birth: new Date(), gender: ''}; 
+  - data = data.gender || data.birth ? data : {birth: new Date(), gender: ''}; 
   #user-detail.col-xs-12.col-sm-12.col-md-12.col-lg-12.collapse.fade.in.active(style='margin:0px;padding:0px;')
     .col-xs-12.col-sm-12.col-md-12.col-lg-12
       h5
@@ -273,7 +280,7 @@ mixin homeContactFields(data)
     +contactAddress(data)
     h6 Telephone
     +contactPhone(data)
-    
+
 mixin userContact(data)
   - var contactObj = function(type){return {type:type, addr:'', addr_2:'', city:'', state:'', zip:'', phone:'', carrier:'', ext:''};};
   - data = data ? data : [contactObj('home')];
@@ -303,12 +310,6 @@ mixin registerAcceptButtons()
         button.btn.btn-lg.btn-default.pull-right(type='button', data-dismiss='modal', style='width:100%;') Cancel
       .col-xs-6.col-sm-6.col-md-6.col-lg-6(style='padding:0px 0px 0px 10px;')
         button.btn.btn-lg.btn-warning.pull-right(type='submit', style='width:100%;') Register
-        
-mixin selectProfilePhoto()
-  .btn.btn-primary.btn-file.btn-lg.pull-right
-    p(style='margin:0px;') Select 
-    input.form-control(type='file', value=user.user.img)
-  button.btn.btn-default.btn-lg.pull-left(type='button', data-dismiss='modal') Cancel
   
 mixin adminProfileOptions()
   .col-xs-12.col-sm-12.col-md-12.col-lg-12

@@ -5,11 +5,11 @@ module.exports.isUserType = function (req){
 };
 
 module.exports.isUser = function (req, res, next){
-	if(req.session.user.type != 'default'){
-		return next();
-	} 
-	backURL=req.header('Referer') || '/';
-	return res.redirect(backURL);
+	if(req.session.user.type === 'guest'){
+		backURL=req.header('Referer') || '/';
+		return res.redirect(backURL);
+	}
+	return next();
 };
 
 function isAdmin(req){

@@ -3,7 +3,7 @@ var db = require('./../db-locations');
 
 var Subject = require('./../models/subject');
 
-module.exports.Subject = function(req, cb){
+module.exports = function(req, cb){
 	var code         = req.body.code;
 	var name         = req.body.name;
 	var description  = req.body.description;

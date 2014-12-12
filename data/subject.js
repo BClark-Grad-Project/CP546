@@ -11,7 +11,7 @@ var backURL;
 module.exports.create = function (req, cb) {
 	db.open('school');
 	
-	newSubject.Subject(req, function(err, id){
+	newSubject(req, function(err, id){
 		if(err){
 			console.log(err);
 			db.close();
