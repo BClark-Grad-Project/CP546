@@ -26,17 +26,37 @@ module.exports = function (data) {
 			}
 		});
 	});
-	
+
+
+	function inSchedule(o, arr) {
+	    for (var i = 0; i < arr.length; i++) {
+	    	//console.log(arr[i].course.id.toString(), o.course.id.toString(),arr[i].course.id.toString() == o.course.id.toString());
+	        if (arr[i].course.id.toString() == o.course.id.toString()) {
+	            return true;
+	        }
+	    }
+	    return false;
+	}
 	/* GET/POST class to schedule page. */
 	router.get('/add', function (req, res, next){data.user.grant.StudentAdmin(req, res, next);}, function(req, res, next) {
 		res.redirect('/catalog');
 	}).post('/add', function (req, res, next){data.user.grant.StudentAdmin(req, res, next);}, function(req, res, next) {
 		data.schedule.getCourseSchedule(req, function(err, schedule){
 			if(err){
+				console.log(err);
 				res.render('addrequest', { title: 'Confirm Add Course', user: req.session.user, schedule:{code:'', course:{code:''}}});
-			} else {
-				res.render('addrequest', { title: 'Confirm Add Course', user: req.session.user, schedule: schedule });
 			}
+			data.schedule.userCurrentSessionSchedule(req, function(err, mySchedule){
+				if(err){
+					console.log(err);
+					res.render('addrequest', { title: 'Confirm Add Course', user: req.session.user, schedule:{code:'', course:{code:''}}});
+				}
+				if(inSchedule(schedule, mySchedule)){
+					res.render('addrequest', { title: 'Confirm Add Course', user: req.session.user, schedule: schedule, enrolled:'You are already enrolled.' });					
+				} else {
+					res.render('addrequest', { title: 'Confirm Add Course', user: req.session.user, schedule: schedule });					
+				}
+			});
 		});
 	}).post('/add/complete', function (req, res, next){data.user.grant.Student(req, res, next);}, function(req, res, next) {
 		data.schedule.addCourse(req, function(err, schedule){

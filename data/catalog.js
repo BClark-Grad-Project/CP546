@@ -29,7 +29,6 @@ module.exports.getCurrent = function (cb) {
 function courseIndexOf(o, arr) {
 
     for (var i = 0; i < arr.length; i++) {
-    	console.log(arr[i].course, o, arr[i].course.toString() == o);
         if (arr[i].course.toString() == o) {
             return i;
         }
@@ -76,7 +75,6 @@ var getCourseInstructors = function(schedulesObj, cb){
 	for(i in schedulesObj){
 		var j = 0;
 		getCourseInstructor(schedulesObj[i].instructor, function(err, instructor){
-			console.log(err, instructor);
 			if(err){return cb(err,null);}	
 			schedulesObj[j].instructor = instructor;
 			if(i == j){
@@ -131,11 +129,8 @@ module.exports.getCatalog = function (id, cb) {
 						db.close();
 						if(err){return cb(err,null);}
 						db.open('user');
-						console.log(courses);
 						for(var i in courses){
-							console.log(i, courses[i].id);
 							var pos = courseIndexOf(courses[i].id, catalog.schedule);
-							console.log(pos);
 							catalog.schedule[pos].course = courses[i];
 						}
 						//console.log(courses, catalog);
