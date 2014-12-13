@@ -2,30 +2,16 @@
 extends layout
 - schedule = typeof(schedule) != 'undefined' ? schedule : { }
 
-//-CSS is inserted in the HEAD tag.
-block css
-  
-//-JavaScript will be inserted at the end of the BODY tag.
-block js
-  
-//-Add navigation item to existing navigation set.
-block nav
-  
-//-Add navigation item to existing Teacher navigation set.
-block navTeacher
-  
-//-Add navigation item to existing Student navigation set.
-block navStudent
-  
 //-HTML content to display.
 block content
   section#main.container
     .row
       //-Columns in a row must equal 12. 
       .col-xs-12.col-sm-12.col-md-12.col-lg-12
-        h2 Drop Summary
-          if user.type == 'admin'
-            | for Student #{schedule.user}
+        h2 Drop Summary 
+          if user.type == 'teacher'
+            | For Your Student 
+        h4 #{schedule.user.first} #{schedule.user.last} (ID: #{schedule.user._id})
     br
     .row
       .col-xs-12.col-sm-12.col-md-12.col-lg-12  
@@ -42,7 +28,7 @@ block content
         if user.type == 'student'
           .col-xs-0.col-sm-0.col-md-3.col-lg-3.hide-md
             b Name
-        if(user.type =='student' || user.type == 'admin')
+        if(user.type =='student' || user.type == 'teacher')
           .col-xs-0.col-sm-1.col-md-1.col-lg-1.hide-sm
             b Types
         else
@@ -58,9 +44,12 @@ block content
         else
           .col-xs-2.col-sm-2.col-md-1.col-lg-1
             b Location
-        if(user.type =='student' || user.type == 'admin')
+        if(user.type =='student')
           .col-xs-3.col-sm-3.col-md-3.col-lg-3
             b Instructor
+        else
+          .col-xs-3.col-sm-3.col-md-3.col-lg-3
+            b Student Name
       br
       hr
     .row
@@ -68,19 +57,19 @@ block content
       .col-xs-12.col-sm-12.col-md-12.col-lg-12
         if user.type == 'teacher'
           .col-xs-2.col-sm-2.col-md-1.col-lg-2.hide-sm
-            small #{schedule.schedule.course.subject.code}-#{schedule.schedule.course.code}
+            small #{schedule.course.code}
         else
           .col-xs-2.col-sm-2.col-md-1.col-lg-1
             small #{schedule.course.code}
         if user.type == 'student'
           .col-xs-0.col-sm-0.col-md-3.col-lg-3.hide-md
             small #{schedule.course.name}
-        if(user.type =='student' || user.type == 'admin')
+        if(user.type =='student' || user.type == 'teacher')
           .col-xs-0.col-sm-1.col-md-1.col-lg-1.hide-sm
             small SEM
         else
           .col-xs-4.col-sm-3.col-md-4.col-lg-4
-            small #{schedule.schedule.course.name}
+            small #{schedule.course.name}
         .col-xs-2.col-sm-1.col-md-1.col-lg-1
           small #{getDays(schedule.schedule.daily)}
         .col-xs-2.col-sm-3.col-md-2.col-lg-2
@@ -92,9 +81,12 @@ block content
         else
           .col-xs-2.col-sm-2.col-md-1.col-lg-1
             small #{schedule.schedule.location}
-        if(user.type =='student' || user.type == 'admin')
+        if(user.type =='student')
           .col-xs-3.col-sm-3.col-md-3.col-lg-3
             small #{schedule.course.instructor.first.charAt(0)}. #{schedule.course.instructor.last} 
+        else
+          .col-xs-3.col-sm-3.col-md-3.col-lg-3
+            small #{schedule.user.first.charAt(0)}. #{schedule.user.last} 
     br    
     .row
       .col-xs-12.col-sm-12.col-md-12.col-lg-12

@@ -76,6 +76,7 @@ block content
             b 
         br
         hr
+      - var j = 0;
       for i in schedule
         .row
           .col-xs-12.col-sm-12.col-md-12.col-lg-12
@@ -113,6 +114,7 @@ block content
                 button.dropBtn.btn.btn-xs.btn-warning(type='button', value=i.id) Drop Course
               else if user.type == 'teacher'
                 button.studentsBtn.btn.btn-xs.btn-warning(value=j, type='button',data-toggle="modal", data-target="#student-list") Student Roll
+                - j++;
         br
     else
       p You are not registered for any courses this class session.

@@ -35,11 +35,11 @@ module.exports = function (data) {
 			res.redirect('/catalog/schedule');
 		});
 	});
-	
+
 	/* GET/POST drop to schedule page. */
-	router.get('/drop', function (req, res, next){data.user.grant.StudentTeacherAdmin(req, res, next);}, function(req, res, next) {
+	router.get('/drop', function (req, res, next){data.user.grant.StudentTeacher(req, res, next);}, function(req, res, next) {
 		res.redirect('/catalog/schedule');
-	}).post('/drop', function (req, res, next){data.user.grant.StudentTeacherAdmin(req, res, next);}, function(req, res, next) {		
+	}).post('/drop', function (req, res, next){data.user.grant.StudentTeacher(req, res, next);}, function(req, res, next) {		
 		data.schedule.getUserSchedule(req, function(err, schedule){
 			if(err){
 				console.log('You are receiving an empty (schedule) Object', {schedule: {schedule:{code: ''}, course:{code:''}}});
@@ -49,7 +49,9 @@ module.exports = function (data) {
 				res.render('drop', { title: 'UM | Confirm Drop Class', user: req.session.user, schedule: schedule });
 			}
 		});
-	}).post('/drop/complete', function (req, res, next){data.user.grant.Student(req, res, next);}, function(req, res, next) {
+	}).post('/drop/complete', function (req, res, next){data.user.grant.StudentTeacher(req, res, next);}, function(req, res, next) {
+		console.log('dropping');
+		
 		data.schedule.dropCourse(req, function(err, schedule){
 			res.redirect('/catalog/schedule');
 		});

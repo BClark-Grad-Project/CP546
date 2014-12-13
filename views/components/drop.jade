@@ -2,21 +2,6 @@
 extends layout
 - schedule = typeof(schedule) != 'undefined' ? schedule : { }
 
-//-CSS is inserted in the HEAD tag.
-block css
-  
-//-JavaScript will be inserted at the end of the BODY tag.
-block js
-  
-//-Add navigation item to existing navigation set.
-block nav
-  
-//-Add navigation item to existing Teacher navigation set.
-block navTeacher
-  
-//-Add navigation item to existing Student navigation set.
-block navStudent
-  
 //-HTML content to display.
 block content
   section#main.container
@@ -28,7 +13,6 @@ block content
         p Current Date (note: need this to know restriction-cannot drop students after 2 weeks into class)
     .row
       .col-xs-12.col-sm-12.col-md-12.col-lg-12
-        p  note: students/teachers only: last column (students' names can only be viewed by teachers)
         h3 Drop Confirmation Page 
         p  You are about to drop the following course, please confirm and click the confirm button to submit your request.
           |You may click the "cancel" button anytime if you do not wish to drop this course. 

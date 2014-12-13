@@ -14,28 +14,22 @@ module.exports.isUser = function (req, res, next){
 
 function isAdmin(req){
 	if (req.session.user.type === 'admin'){
-		console.log('Approved access.');
 		return true;
 	}
-	console.log('Access denied.');
 	return false;
 }
 
 function isTeacher(req){
 	if (req.session.user.type === 'teacher'){
-		console.log('Approved access.');
 		return true;
 	}
-	console.log('Access denied.');
 	return false;
 }
 
 function isStudent(req){
 	if (req.session.user.type === 'student'){
-		console.log('Approved access.');
 		return true;
 	}
-	console.log('Access denied.');
 	return false;
 }
 

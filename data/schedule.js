@@ -8,6 +8,16 @@ var Subject = require('./models/subject');
 var Course = require('./models/subject-course');
 var User = require('./models/user');
 
+
+function scheduleIndexOf(o, arr) {
+
+    for (var i = 0; i < arr.length; i++) {
+        if (arr[i].schedule.id.toString() == o) {
+            return i;
+        }
+    }
+}
+
 module.exports.create = function () {
 	db.open('school', function(err){
 		if(err !== undefined){return;}
@@ -64,7 +74,7 @@ module.exports.userCurrentSessionSchedule = function (req, cb) {
 		db.open('user');
 		UserSchedule
 			.find({user: req.session.user.id, active: true, 'session.code': catalog})
-			.populate({ path: 'user', select: '_id first last' })
+			.populate({ path: 'user', select: '_id first last type' })
 			.exec(function(err, history){
 				if(err){cb(err, null);return;}
 				
@@ -73,23 +83,26 @@ module.exports.userCurrentSessionSchedule = function (req, cb) {
 				}
 				if(req.session.user.type == 'teacher'){
 					var j = 0;
-					console.log(history.length);
 					for(i in history){
 						UserSchedule
-							.find({'schedule.id':history[j].schedule.id, active:true})
-							.populate({ path: 'user', select: '_id first last type' })
+							.find({'schedule.id':history[i].schedule.id, active: true})
+							.populate({ path: 'user', match: { type: 'student'}, select: '_id first last type' })
 							.exec(function(err, students){
-								if(err){cb(err, null);return;}
-								
+								if(err){return cb(err, null);}
 								var studentList = [];
-								for(k in students){
-									if(students[k].user.type == 'student'){
-										studentList.push(students[k].getUserData());
+								if(students.length > 1){
+									for(k in students){
+										if(students[k].user != null){
+											//console.log(students[k].getData());
+											studentList.push(students[k].getData());
+										}
 									}
 								}
-								mySchedule[j].students = studentList;
+								var search = studentList.length ? scheduleIndexOf(studentList[0].schedule.id, mySchedule) : 'na';
+								if(search !== 'na'){
+									mySchedule[search].students = studentList;
+								}
 								j++;
-								
 								if(j == history.length){
 									db.close();
 									
@@ -131,13 +144,14 @@ module.exports.getUserSchedule = function(req, cb){
 	db.open('user');
 	UserSchedule
 		.findOne({_id:req.body.grab})
+		.populate({path:'user', select:'first last email _id'})
 		.exec(function(err, data){
 			console.log(err, data);
 			db.close();
 			if(err){cb(err,null);return;}
 			
-			cb(null, data.getData());
-			return;
+			
+			return cb(null, data.getData());
 		});
 };
 
