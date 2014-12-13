@@ -74,7 +74,7 @@ block content
             small #{schedule.course.name}
         if(user.type =='student' || user.type == 'admin')
           .col-xs-0.col-sm-1.col-md-1.col-lg-1.hide-sm
-            small SEM
+            small #{schedule.course.type}
         else
           .col-xs-4.col-sm-3.col-md-4.col-lg-4
             small #{schedule.course.name}
@@ -118,6 +118,8 @@ block content
           input.form-control(type='hidden', value=schedule.start_time, name='start_time')
           input.form-control(type='hidden', value=schedule.min_length, name='min_length')
           input.form-control(type='hidden', value=schedule.location, name='location')
+          input.form-control(type='hidden', value=schedule.course.units, name='units')
+          input.form-control(type='hidden', value=schedule.course.type, name='type')
           button.btn.btn-lg.btn-warning.pull-right(type='submit', style='margin:20px;') Confirm  
           button.btn.btn-lg.pull-right.btn-default(type='button', style='margin:20px;', onClick="history.go(-1)") Cancel  
           

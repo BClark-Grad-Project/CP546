@@ -172,7 +172,6 @@ module.exports.addCourse = function(req, cb){
 	daily.thur = req.body.thur;
 	daily.fri = req.body.fri;
 	daily.sat = req.body.sat;
-	console.log(daily, req.body);
 	
 	
 	db.open('user');
@@ -188,15 +187,14 @@ module.exports.addCourse = function(req, cb){
 		    min_length:  req.body.min_length,
 		    location:    req.body.location
 	    },
-	    units:       req.body.units,
-	    instructor:  req.body.instructor,
-	    seats:       req.body.seats,
 	    course:      {
 	    	id:		 req.body.courseid,
-  	      code:      req.body.coursecode,
+		  type:      req.body.type,
+		  code:      req.body.coursecode,
+	  	 units:      req.body.units,
   		  name:      req.body.coursename,
-  		  instructor: {first: req.body.instructorfirst,
-  			           last:  req.body.instructorlast} },
+    instructor:      {first: req.body.instructorfirst,
+  			          last:  req.body.instructorlast} },
   		active:  true,
 		activity:''
 	});

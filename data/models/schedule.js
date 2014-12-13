@@ -44,6 +44,7 @@ ScheduleSchema.methods.getData = function(){
         start_time:  this.start_time,
         min_length:  this.min_length,
         seats:       this.seats,
+        units:       this.units,
         registered:  this.registered,
         location:    this.location,
         course:      this.course

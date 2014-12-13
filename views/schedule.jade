@@ -91,7 +91,7 @@ block content
                 small #{i.course.name}
             if(user.type =='student' || user.type == 'admin')
               .col-xs-0.col-sm-1.col-md-1.col-lg-1.hide-sm
-                small SEM
+                small #{i.course.type}
             else
               .col-xs-4.col-sm-3.col-md-4.col-lg-4
                 small #{i.course.name}

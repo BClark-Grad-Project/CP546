@@ -6,12 +6,12 @@ var SchoolSubject = require('./subject');
 var SubjectCourseSchema = mongoose.Schema({
     code:         {type: String},
     units:        {type: Number},
+    type:         {type: String},
     name:         {type: String},
     subject:      {type: mongoose.Schema.Types.ObjectId,
     	           ref: 'Subject'},
     description:  {type: String},
-    requirements: {type: String},
-    registered:   {type: Number}
+    requirements: {type: String}
 });
 
 //db.subjectcourses.insert({_id: ObjectId("54593884a2b7eba1c5f6fab0"), code: '010', units: 3, name: 'Introduction to Information Systems', subject: ObjectId("545658a4f1832e26bc308e19"), description: 'Use information technology to master their current or future jobs and to help ensure the success of their organization.  To accomplish this goal, this text helps students to become informed users; that is, persons knowledgeable about information systems and information technology. The focus is not on merely learning the concepts of IT but rather on applying those concepts to facilitate business processes.', requirements: ''})
@@ -29,6 +29,7 @@ SubjectCourseSchema.methods.getData = function(){
 		id:          this._id,
 	    code:        this.code,
 	    units:       this.units,
+	    type:       this.type,
 	    name:        this.name,
 	    subject:     this.subject,
 	    description: this.description,

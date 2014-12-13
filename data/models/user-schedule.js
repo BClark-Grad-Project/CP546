@@ -10,6 +10,8 @@ var UserScheduleSchema = mongoose.Schema({
     	      description:{type: String} },
     course:	 {id:         {type: mongoose.Schema.Types.ObjectId},
     	      code:       {type: String},
+    		  units:      {type: Number},
+    		  type:       {type: String},
     		  name:       {type: String},
     		  instructor: {first: {type: String},
     			           last:  {type: String} } }, 
