@@ -1,16 +1,15 @@
 $(function() {
 	$('.dropListBtn').on('click', function () {	    
 	    var listValue = $('select[name="teach-class-list"]').val();
-	    $('input[name="grab"]').val(listValue);
-	    console.log(listValue);
+	    $('input[name="grab"]').val(schedule[$('input[name="grab"]').val()].students[listValue].id);
 	    $('form[name=teach-class-list]').attr('action','/student/drop').trigger('submit');
 	});
 
 	$('.viewHistoryListBtn').on('click', function () {	    
 	    var listValue = $('select[name="teach-class-list"]').val();
-	    $('input[name="grab"]').val(listValue);
+	    $('input[name="grab"]').val(schedule[$('input[name="grab"]').val()].students[listValue].user._id);
 	    
-	    $('form[name=teach-class-list]').attr('action','/student/history').trigger('submit');
+	    $('form[name=teach-class-list]').attr('action','/student/history/' + $('input[name="grab"]').val()).trigger('submit');
 	    
 	});
 
@@ -23,14 +22,14 @@ $(function() {
 	
 	$('.studentsBtn').on('click', function () {
 	    var position = $(this).val();
-	    console.log(schedule);
+	    $('input[name="grab"]').val(position);
 	    $('select[name=teach-class-list]').find('option').remove().end();
 	    $('select[name=teach-class-list]').empty();
 	    
 	    $('#student-list-title').empty();
 	    $('#student-list-title').append('( ' + schedule[position].course.code + ' )  ' + schedule[position].course.name);
 	    for(i in schedule[position].students){
-	    	$('select[name=teach-class-list]').append('<option value="' + schedule[position].students[i].id + '">' + schedule[position].students[i].user.first + ' ' + schedule[position].students[i].user.last + '</option>');
+	    	$('select[name=teach-class-list]').append('<option value="' + i + '">' + schedule[position].students[i].user.first + ' ' + schedule[position].students[i].user.last + '</option>');
 	    }
 	});
 });

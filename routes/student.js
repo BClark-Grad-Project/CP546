@@ -3,16 +3,30 @@ module.exports = function (data) {
 	var router = express.Router();
 	var backURL;
 	
+	
 	router.get('/history', function (req, res, next){data.user.grant.StudentTeacherAdmin(req, res, next);}, function(req, res, next) {
-		res.redirect('/catalog/schedule');
-	}).post('/history', function (req, res, next){data.user.grant.StudentTeacherAdmin(req, res, next);}, function(req, res, next) {
-		data.schedule.getUserCourseHistory(req, function(err, history){
+		var id = req.body.grab ? req.body.grab : req.session.user.id;
+		data.schedule.getUserCourseHistory(id, function(err, history){
 			if(err){
 				console.log('You are receiving an empty (history) Object', {history: {schedule:{code: ''}, course:{code:''}}});
 				res.render('history', { title: 'University Manager | Student\'s Class History Report', user: req.session.user, history: {schedule:{code: ''}, course:{code:''}}});			
 			}else{
 				console.log('You are receiving a (history) Object', history);
-				res.render('history', { title: 'University Manager | Student\'s Class History Report', user: req.session.user, history: history });		
+				res.render('history', { title: 'Student\'s Transcript', user: req.session.user, history: history });		
+			}
+		});
+	});
+	
+	router.post('/history/:id', function (req, res, next){data.user.grant.StudentTeacherAdmin(req, res, next);}, function(req, res, next) {
+		var id = req.body.grab ? req.body.grab : req.params.id;
+		console.log(id);
+		data.schedule.getUserCourseHistory(id, function(err, history){
+			if(err){
+				console.log('You are receiving an empty (history) Object', {history: {schedule:{code: ''}, course:{code:''}}});
+				res.render('history', { title: 'University Manager | Student\'s Class History Report', user: req.session.user, history: {schedule:{code: ''}, course:{code:''}}});			
+			}else{
+				console.log('You are receiving a (history) Object', history);
+				res.render('history', { title: 'Student\'s Transcript', user: req.session.user, history: history });		
 			}
 		});
 	});

@@ -1,100 +1,37 @@
 // Begin Jade template.
 extends layout
-- userpool = typeof(userpool) != 'undefined' ? userpool : { }
- 
-//-Add navigation item to existing navigation set.
-block nav
-  li
-    a(data-toggle='collapse',data-parent="#accordion", data-target='#collapseOne', href='#collapseOne') View Course History
-  li
-    a(data-toggle='collapse',data-parent="#accordion", data-target='#collapseThree', href='#collapseThree') View Transcript
-
-//-Add navigation item to existing Teacher navigation set.
-block navTeacher
-   +navItem('#main','Student History')
-
+- historyhistory = typeof(history) != 'undefined' ?  : { }
+  
 //-HTML content to display.
 block content
   section#main.container
     .row
       //-Columns in a row must equal 12. 
       .col-xs-12.col-sm-12.col-md-12.col-lg-12
-        h1 Student Class History Report
-        br
-        p Please select the activity you wish to conduct below.
-        br
-        br
-        #accordion.panel-group
-          .panel.panel-default
-            .panel-heading
-              h2.panel-title
-                a(data-toggle="collapse", data-parent="#accordion", href="#collapseOne")
-                  | View Course History
-            #collapseOne.panel-collapse.collapse
-              .panel-body
-                form(role='form', method='POST', action='/student/history', id='student-history')
-                  h3 User Name
-                  .input-group
-                    .input-group-addon First Name
-                    input.form-control(name='first', placeholder='', type='input', autofocus, required)
-                  br
-                  .input-group
-                    .input-group-addon Last Name
-                    input.form-control(name='last', placeholder='', type='input', required)
-                  br
-                  .input-group
-                    .input-group-addon User ID
-                    input.form-control(name='id', placeholder='', type='input', required)
-                  br
-                  .input-group
-                   .input-group-addon Semester
-                   input.form-control(name='id', placeholder='', type='input', required)
-                  br
-                  button.btn.btn-lg.btn-primary.pull-right.disabled(type='submit') Submit
-          .panel.panel-default
-            .panel-heading
-              h2.panel-title
-                a(data-toggle="collapse", data-parent="#accordion", href="#collapseTwo")
-                  | View Transcript
-            #collapseTwo.panel-collapse.collapse
-              .panel-body
-                form(role='form', method='POST', action='/student/history', id='student-transcript')
-                  h3 User Name
-                  .input-group
-                    .input-group-addon First Name
-                    input.form-control(name='first', placeholder='', type='input', autofocus, required)
-                  br
-                  .input-group
-                    .input-group-addon Last Name
-                    input.form-control(name='last', placeholder='', type='input', required)
-                  br
-                  .input-group
-                    .input-group-addon User ID
-                    input.form-control(name='id', placeholder='', type='input', required)
-                  br
-                  button.btn.btn-lg.btn-primary.pull-right.disabled(type='submit') Submit
-
+        h1 #{title}
+        if user.id != history.courses[0].user
+          h3 Student Profile: #{history.courses[0].user.first} #{history.courses[0].user.last} ( #{history.courses[0].user.id} )
     .row
-      //-Columns in a row must equal 12.
       .col-xs-12.col-sm-12.col-md-12.col-lg-12
-        h3 Admin only
-        p Enter student's information to see class history.
-        .row
-          .col-xs-6.col-sm-6.col-md-6.col-lg-6
-            .input-group
-              .input-group-addon Last Name
-              input.form-control(name='lastName', placeholder='', type='input', required)
-          .col-xs-6.col-sm-6.col-md-6.col-lg-6
-            .input-group
-              .input-group-addon CWID
-              input.form-control(name='CWID', placeholder='', type='number', required)
-        br
-        .row
-          .col-xs-6.col-sm-6.col-md-6.col-lg-6
-            .input-group
-              .input-group-addon Semester
-              input.form-control(name='semeser', placeholder='', type='input', required)
-        br
-        button.btn.btn-lg.btn-primary.pull-right.disabled(type='submit') View
-
+        p 
+    br
+    .row
+      .col-xs-12.col-sm-12.col-md-12.col-lg-12
+            for n in history.sessions
+              .panel
+                  small
+                    b #{n.description} - #{n.code}
+                  hr
+                  .row
+                    for j in history.courses
+                        if j.session.code == n.code
+                          .col-xs-12.col-sm-12.col-md-12.col-lg-12(style='padding:5px 18px 5px 18px; margin-top:0px;')
+                            .col-xs-3.col-sm-3.col-md-2.col-lg-2
+                              small.pull-right 
+                                b #{j.course.code}
+                            .col-xs-6.col-sm-6.col-md-8.col-lg-8.center
+                              small #{j.course.name}
+                            .col-xs-3.col-sm-3.col-md-2.col-lg-2
+                              small.pull-left 3
+              br
 // End Jade Template

@@ -10,22 +10,12 @@ var User = require('./models/user');
 
 
 function scheduleIndexOf(o, arr) {
-
     for (var i = 0; i < arr.length; i++) {
         if (arr[i].schedule.id.toString() == o) {
             return i;
         }
     }
 }
-
-module.exports.create = function () {
-	db.open('school', function(err){
-		if(err !== undefined){return;}
-	});
-	
-	
-	db.close();
-};
 
 module.exports.getCourseSchedule = function (req, cb){
 	var courseSchedule;
@@ -121,22 +111,38 @@ module.exports.userCurrentSessionSchedule = function (req, cb) {
 		});
 };
 
+var inSchedule = function(obj, arr){
+    for (var i = 0; i < arr.length; i++) {
+    	console.log(arr[i].code, obj.code, arr[i].code == obj.code);
+        if (arr[i].code == obj.code) {
+            return true;
+        }
+    }
+    return false;
+};
 
-module.exports.getUserCourseHistory = function (req, cb){
+module.exports.getUserCourseHistory = function (id, cb){
+	var history = {};
 	var courses = [];
 	
 	db.open('user');
 	UserSchedule
-		.find({user: req.body.grab})
+		.find({user: id})
+		.populate({path:'user', select:'first last email _id'})
 		.exec(function(err, data){
 			db.close();
 			if(err){cb(err,null);return;}
+			var sessions = [];
 			
 			for(i in data){
 				courses.push(data[i].getData());
+				if(!inSchedule(data[i].session, sessions)){
+					sessions.push(data[i].session);
+				}
 			}
-			cb(null, courses);
-			return;
+			history.sessions = sessions;
+			history.courses = courses;
+			return cb(null, history);
 		});
 };
 
