@@ -9,8 +9,7 @@ block content
       //-Columns in a row must equal 12. 
       .col-xs-12.col-sm-12.col-md-12.col-lg-12
         h1 #{title}
-        if user.id != history.courses[0].user
-          h3 Student Profile: #{history.courses[0].user.first} #{history.courses[0].user.last} ( #{history.courses[0].user.id} )
+        h3 Student Profile: #{history.courses[0].user.first} #{history.courses[0].user.last} ( #{history.courses[0].user.id} )
     .row
       .col-xs-12.col-sm-12.col-md-12.col-lg-12
         p 
