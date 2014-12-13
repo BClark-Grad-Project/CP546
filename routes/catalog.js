@@ -17,13 +17,7 @@ module.exports = function (data) {
 						console.log(err);
 						next({error:err});
 					} else {
-
-						console.log('You are receiving a none registered course (schedule) Object', catalog.schedule[0]);
-						console.log('You are receiving a none registered course (schedule) Object', catalog.schedule[1]);
-						console.log('You are receiving a none registered course (schedule) Object', catalog.schedule[2]);
-						console.log('You are receiving a none registered course (schedule) Object', catalog.schedule[3]);
-						console.log('You are receiving a none registered course (schedule) Object', catalog.schedule[4]);
-						res.render('catalog', { title: 'UM | Class Catalog', user: req.session.user, catalog: catalog });
+						res.render('catalog', { title: 'Class Catalog', user: req.session.user, catalog: catalog });
 					}
 				});
 			}
@@ -36,7 +30,6 @@ module.exports = function (data) {
 		data.schedule.userCurrentSessionSchedule(req, function(err, data){
 			if(err){
 				console.log(err);
-				console.log('You are receiving a none registered course (schedule) Object', {user: req.session.user.id, session:{code:'Not Registered In Any Class'}, course: {code: 'None.'}});
 				res.render('schedule', { title: 'My Schedule', user: req.session.user, schedule: {user: req.session.user.id, session:{code:'Not Registered In Any Class'}, course: {code: 'None.'}}});
 			} else {
 				res.render('schedule', { title: 'My Schedule', user: req.session.user, schedule: data });
@@ -49,10 +42,8 @@ module.exports = function (data) {
 		data.subject.getSubjects(function (err, data){
 			if(err){
 				console.log(err);
-				console.log('You are receiving an empty (subjects) Object', {code: '', name: '', description: ''});
 				res.render('addcourse', { title: 'UM | Add Class Schedule', user: req.session.user, subjects: {code: '', name: '', description: ''}});
 			} else {
-				console.log('You are receiving the (subjects) Object', data);
 				res.render('addcourse', { title: 'UM | Add Class Schedule', user: req.session.user, subjects: data });
 			}
 		});
@@ -63,10 +54,8 @@ module.exports = function (data) {
 		data.course.getCourseList(function(err, courses){
 			if(err){
 				console.log(err);
-				console.log('You are receiving an empty (courses) Object', {});
 				res.render('addschedule', { title: 'UM | Class Scheduled added', user: req.session.user, courses:{} });
 			} else {
-				console.log('You are receiving the (courses) Object', courses);
 				res.render('addschedule', { title: 'UM | Class Scheduled added', user: req.session.user, courses:courses });
 			}
 		});

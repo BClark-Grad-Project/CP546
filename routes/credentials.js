@@ -70,7 +70,6 @@ module.exports = function (data) {
 					console.log(err);
 					next(err);
 				}
-				console.log('You are receiving the (applicants) Object', applicants);
 				res.render('manageapplications', { title: 'Approve Applications', user: req.session.user, applicants: applicants });
 			});
 	});
