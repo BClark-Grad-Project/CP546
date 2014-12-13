@@ -9,7 +9,7 @@ module.exports = function (data) {
 		data.schedule.getUserCourseHistory(id, function(err, history){
 			if(err){
 				console.log('You are receiving an empty (history) Object', {history: {schedule:{code: ''}, course:{code:''}}});
-				res.render('history', { title: 'University Manager | Student\'s Class History Report', user: req.session.user, history: {schedule:{code: ''}, course:{code:''}}});			
+				res.render('history', { title: 'Student\'s Transcript', user: req.session.user, history: {schedule:{code: ''}, course:{code:''}}});			
 			}else{
 				console.log('You are receiving a (history) Object', history);
 				res.render('history', { title: 'Student\'s Transcript', user: req.session.user, history: history });		
@@ -23,7 +23,7 @@ module.exports = function (data) {
 		data.schedule.getUserCourseHistory(id, function(err, history){
 			if(err){
 				console.log('You are receiving an empty (history) Object', {history: {schedule:{code: ''}, course:{code:''}}});
-				res.render('history', { title: 'University Manager | Student\'s Class History Report', user: req.session.user, history: {schedule:{code: ''}, course:{code:''}}});			
+				res.render('history', { title: 'Student\'s Transcript', user: req.session.user, history: {schedule:{code: ''}, course:{code:''}}});			
 			}else{
 				console.log('You are receiving a (history) Object', history);
 				res.render('history', { title: 'Student\'s Transcript', user: req.session.user, history: history });		
@@ -38,10 +38,10 @@ module.exports = function (data) {
 		data.schedule.getCourseSchedule(req, function(err, schedule){
 			if(err){
 				console.log('You are receiving an empty (schedule) Object', {schedule: {schedule:{code: ''}, course:{code:''}}});
-				res.render('addrequest', { title: 'University Manager | Add Class', user: req.session.user, schedule:{code:'', course:{code:''}}});
+				res.render('addrequest', { title: 'Confirm Add Course', user: req.session.user, schedule:{code:'', course:{code:''}}});
 			} else {
 				console.log('You are receiving the (schedule) Object', schedule);
-				res.render('addrequest', { title: 'University Manager | Add Class', user: req.session.user, schedule: schedule });
+				res.render('addrequest', { title: 'Confirm Add Course', user: req.session.user, schedule: schedule });
 			}
 		});
 	}).post('/add/complete', function (req, res, next){data.user.grant.Student(req, res, next);}, function(req, res, next) {
@@ -57,10 +57,10 @@ module.exports = function (data) {
 		data.schedule.getUserSchedule(req, function(err, schedule){
 			if(err){
 				console.log('You are receiving an empty (schedule) Object', {schedule: {schedule:{code: ''}, course:{code:''}}});
-				res.render('drop', { title: 'UM | Confirm Drop Class', user: req.session.user , schedule: {schedule:{code: ''}, course:{code:''}}});			
+				res.render('drop', { title: 'Confirm Drop Course', user: req.session.user , schedule: {schedule:{code: ''}, course:{code:''}}});			
 			}else{
 				console.log('You are receiving the (schedule) Object', schedule);
-				res.render('drop', { title: 'UM | Confirm Drop Class', user: req.session.user, schedule: schedule });
+				res.render('drop', { title: 'Confirm Drop Course', user: req.session.user, schedule: schedule });
 			}
 		});
 	}).post('/drop/complete', function (req, res, next){data.user.grant.StudentTeacher(req, res, next);}, function(req, res, next) {

@@ -49,7 +49,7 @@ module.exports = function (data) {
 	
 	/* GET/POST register page. */
 	router.get('/register', function(req, res, next) {
-		res.render('register', { title: 'UM | Register for Fall 2014', user: req.session.user });
+		res.render('register', { title: 'Register for Fall 2014', user: req.session.user });
 	}).post('/register', function(req, res) {
 		backURL=req.header('Referer') || '/';
 		res.redirect(backURL);
@@ -71,13 +71,13 @@ module.exports = function (data) {
 					next(err);
 				}
 				console.log('You are receiving the (applicants) Object', applicants);
-				res.render('manageapplications', { title: 'UM | Grant Credentials', user: req.session.user, applicants: applicants });
+				res.render('manageapplications', { title: 'Approve Applications', user: req.session.user, applicants: applicants });
 			});
 	});
 
 	/* GET/POST add page. */
 	router.get('/manage/users', function (req, res, next){data.user.grant.Admin(req, res, next);}, function(req, res, next) {
-		res.render('manageusers', { title: 'UM | Grant Credentials', user: req.session.user });
+		res.render('manageusers', { title: 'Edit / (De)authorize User Profile', user: req.session.user });
 	});
 	
 	

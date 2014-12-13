@@ -37,9 +37,9 @@ module.exports = function (data) {
 			if(err){
 				console.log(err);
 				console.log('You are receiving a none registered course (schedule) Object', {user: req.session.user.id, session:{code:'Not Registered In Any Class'}, course: {code: 'None.'}});
-				res.render('schedule', { title: 'UM | My Schedule', user: req.session.user, schedule: {user: req.session.user.id, session:{code:'Not Registered In Any Class'}, course: {code: 'None.'}}});
+				res.render('schedule', { title: 'My Schedule', user: req.session.user, schedule: {user: req.session.user.id, session:{code:'Not Registered In Any Class'}, course: {code: 'None.'}}});
 			} else {
-				res.render('schedule', { title: 'UM | My Schedule', user: req.session.user, schedule: data });
+				res.render('schedule', { title: 'My Schedule', user: req.session.user, schedule: data });
 			}
 		});
 	});
