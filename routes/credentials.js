@@ -14,9 +14,10 @@ module.exports = function (data) {
 			} else {
 				if(req.session.user.type != 'admin'){
 					res.redirect('/catalog/schedule');
+				} else if(req.session.user.type != 'applicant'){
+					res.redirect('/catalog');
 				} else {
-					backURL=req.header('Referer') || '/';
-					res.redirect(backURL);
+					res.redirect('/manage/applications');
 				}
 			}
 		});

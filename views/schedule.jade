@@ -117,5 +117,16 @@ block content
                 - j++;
         br
     else
-      p You are not registered for any courses this class session.
+      .row
+        //-Columns in a row must equal 12. 
+        .col-xs-12.col-sm-12.col-md-12.col-lg-12.center
+          br
+          br
+          br
+          if user.type == 'student'
+            small.center You are not registered for any courses this class session.  Begin 
+            a(href='/catalog') adding courses
+            | &nbsp;today!
+          else
+            small You are not registered for any courses this class session.  
 // End Jade Template
