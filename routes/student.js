@@ -50,7 +50,7 @@ module.exports = function (data) {
 				console.log(err);
 				res.render('addrequest', { school: req.session.school, title: 'Confirm Add Course', user: req.session.user, schedule:{code:'', course:{code:''}}});
 			}
-			data.schedule.userCurrentSessionSchedule(req, function(err, mySchedule){
+			data.schedule.userNextSessionSchedule(req, function(err, mySchedule){
 				if(err){
 					console.log(err);
 					res.render('addrequest', { school: req.session.school, title: 'Confirm Add Course', user: req.session.user, schedule:{code:'', course:{code:''}}});

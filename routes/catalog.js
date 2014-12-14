@@ -27,13 +27,15 @@ module.exports = function (data) {
 
 	/* GET schedule page. */
 	router.get('/schedule', function (req, res, next){data.user.grant.StudentTeacher(req, res, next);}, function(req, res, next) {
-		data.schedule.userCurrentSessionSchedule(req, function(err, data){
-			if(err){
-				console.log(err);
-				res.render('schedule', { school: req.session.school, title: 'My Schedule', user: req.session.user, schedule: {user: req.session.user.id, session:{code:'Not Registered In Any Class'}, course: {code: 'None.'}}});
-			} else {
-				res.render('schedule', { school: req.session.school, title: 'My Schedule', user: req.session.user, schedule: data });
-			}
+		data.schedule.userCurrentSessionSchedule(req, function(err, dataOne){
+			data.schedule.userNextSessionSchedule(req, function(err, dataTwo){
+				if(err){
+					console.log(err);
+					res.render('schedule', { school: req.session.school, title: 'My Schedule', user: req.session.user, schedule: {user: req.session.user.id, session:{code:'Not Registered In Any Class'}, course: {code: 'None.'}}});
+				} else {
+					res.render('schedule', { school: req.session.school, title: 'My Schedule', user: req.session.user, schedule: dataOne, pending: dataTwo });
+				}				
+			});
 		});
 	});
 

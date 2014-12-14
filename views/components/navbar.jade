@@ -17,10 +17,11 @@ nav.navbar.navbar-default(role='navigation')
           b Manager
     #bs-example-navbar-collapse-1.collapse.navbar-collapse
       ul.nav.navbar-nav.navbar-left
-        li
-          a(href='/catalog') 
-            span.glyphicon.glyphicon-book &nbsp;
-            | #{school.register.description} Catalog 
+        if school.register.active
+          li
+            a(href='/catalog') 
+              span.glyphicon.glyphicon-book &nbsp;
+              | #{school.register.description} Catalog 
         block nav
       ul.nav.navbar-nav.navbar-right
         li.dropdown

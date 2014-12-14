@@ -30,8 +30,7 @@ module.exports = function (data) {
 				console.log(err);
 				next(null, false, 'There was a problem signing you out correctly.');
 			}
-			backURL=req.header('Referer') || '/';
-			res.redirect(backURL);
+			res.redirect('/');
 		});
 	});
 

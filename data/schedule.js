@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 var db = require('./db-locations.js');
 var UserSchedule = require('./models/user-schedule');
 var Catalog = require('./catalog');
+var findCatalog = require('./functions/findCatalog');
 var Schedule = require('./models/schedule');
 var Subject = require('./models/subject');
 var Course = require('./models/subject-course');
@@ -61,6 +62,7 @@ module.exports.userCurrentSessionSchedule = function (req, cb) {
 	Catalog.getCurrent(function(err, catalog){
 		if(err){cb(err, null);return;}
 
+	console.log('getting catalog id :' + catalog);
 		db.open('user');
 		UserSchedule
 			.find({user: req.session.user.id, active: true, 'session.code': catalog})
@@ -111,6 +113,64 @@ module.exports.userCurrentSessionSchedule = function (req, cb) {
 		});
 };
 
+
+module.exports.userNextSessionSchedule = function (req, cb) {
+	var mySchedule = [];
+	Catalog.getNext(function(err, catalog){
+		if(err){cb(err, null);return;}
+		console.log('getting catalog id :' + catalog);
+		db.open('user');
+		UserSchedule
+			.find({user: req.session.user.id, active: true, 'session.code': catalog})
+			.populate({ path: 'user', select: '_id first last type' })
+			.exec(function(err, history){
+				if(err){cb(err, null);return;}
+				
+				for(i in history){
+					mySchedule.push(history[i].getData());
+				}
+				if(req.session.user.type == 'teacher'){
+					var j = 0;
+					for(i in history){
+						UserSchedule
+							.find({'schedule.id':history[i].schedule.id, active: true})
+							.populate({ path: 'user', match: { type: 'student'}, select: '_id first last type' })
+							.exec(function(err, students){
+								if(err){return cb(err, null);}
+								var studentList = [];
+								if(students.length > 1){
+									for(k in students){
+										if(students[k].user != null){
+											//console.log(students[k].getData());
+											studentList.push(students[k].getData());
+										}
+									}
+								}
+								var search = studentList.length ? scheduleIndexOf(studentList[0].schedule.id, mySchedule) : 'na';
+								if(search !== 'na'){
+									console.log(studentList[0].schedule.id, search);
+									mySchedule[search].students = studentList;
+								}
+								j++;
+								if(j == history.length){
+									console.log(mySchedule);
+									db.close();
+									
+									cb(null, mySchedule);
+									return;
+								}
+							});
+					}
+				} else {
+					db.close();
+					
+					cb(null, mySchedule);
+					return;
+				}
+			});	
+		});
+};
+
 var inSchedule = function(obj, arr){
     for (var i = 0; i < arr.length; i++) {
     	console.log(arr[i].code, obj.code, arr[i].code == obj.code);
@@ -127,7 +187,7 @@ module.exports.getUserCourseHistory = function (id, cb){
 	
 	db.open('user');
 	UserSchedule
-		.find({user: id})
+		.find({user: id, active: true})
 		.populate({path:'user', select:'first last email _id'})
 		.exec(function(err, data){
 			db.close();
@@ -173,47 +233,46 @@ module.exports.addCourse = function(req, cb){
 	daily.fri = req.body.fri;
 	daily.sat = req.body.sat;
 	
-	
-	db.open('user');
-	var schedule = new UserSchedule({
-		user:	req.body.id,
-	    session:    {
-			code: req.body.sessioncode
-			},
-	    schedule:{
-	    	id:			req.body.scheduleid,
-		    daily:       daily,
-		    start_time:  req.body.start_time,
-		    min_length:  req.body.min_length,
-		    location:    req.body.location
-	    },
-	    course:      {
-	    	id:		 req.body.courseid,
-		  type:      req.body.type,
-		  code:      req.body.coursecode,
-	  	 units:      req.body.units,
-  		  name:      req.body.coursename,
-    instructor:      {first: req.body.instructorfirst,
-  			          last:  req.body.instructorlast} },
-  		active:  true,
-		activity:''
+	findCatalog.nextDetail(function(err, catalog){
+		db.open('user');
+		var schedule = new UserSchedule({
+			user:	req.body.id,
+		    session:    catalog,
+		    schedule:{
+		    	id:			req.body.scheduleid,
+			    daily:       daily,
+			    start_time:  req.body.start_time,
+			    min_length:  req.body.min_length,
+			    location:    req.body.location
+		    },
+		    course:      {
+		    	id:		 req.body.courseid,
+			  type:      req.body.type,
+			  code:      req.body.coursecode,
+		  	 units:      req.body.units,
+	  		  name:      req.body.coursename,
+	    instructor:      {first: req.body.instructorfirst,
+	  			          last:  req.body.instructorlast} },
+	  		active:  true,
+			activity:''
+		});
+		
+		schedule.save(function (err) {
+	        db.close();
+	        if (err){
+	            return cb(err, null);
+	        }
+	        db.open('school');
+	        Schedule
+	        	.findOneAndUpdate({_id:req.body.scheduleid},{$inc: {registered: 1}},{},function(err, data){
+	            	db.close();
+	        		if (err){
+	                    return cb(err, null);
+	                }
+	        		return cb(null, schedule.getData());
+	        	});
+	    });		
 	});
-	
-	schedule.save(function (err) {
-        db.close();
-        if (err){
-            return cb(err, null);
-        }
-        db.open('school');
-        Schedule
-        	.findOneAndUpdate({_id:req.body.scheduleid},{$inc: {registered: 1}},{},function(err, data){
-            	db.close();
-        		if (err){
-                    return cb(err, null);
-                }
-        		return cb(null, schedule.getData());
-        	});
-    });
 	
 	
 };
