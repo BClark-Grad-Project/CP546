@@ -4,15 +4,19 @@ module.exports = function (data) {
 	var backURL;
 	
 	
-	router.get('/history', function (req, res, next){data.user.grant.StudentTeacherAdmin(req, res, next);}, function(req, res, next) {
-		var id = req.body.grab ? req.body.grab : req.session.user.id;
-		data.schedule.getUserCourseHistory(id, function(err, history){
-			if(err){
-				res.render('history', { title: 'Student\'s Transcript', user: req.session.user, history: {schedule:{code: ''}, course:{code:''}}});			
-			}else{
-				res.render('history', { title: 'Student\'s Transcript', user: req.session.user, history: history });		
-			}
-		});
+	router.get('/history', function (req, res, next){data.user.grant.StudentTeacher(req, res, next);}, function(req, res, next) {
+		if(req.session.user.type == 'teacher'){
+			res.redirect('/catalog/schedule');
+		} else {
+			var id = req.body.grab ? req.body.grab : req.session.user.id;
+			data.schedule.getUserCourseHistory(id, function(err, history){
+				if(err){
+					res.render('history', { title: 'Student\'s Transcript', user: req.session.user, history: {schedule:{code: ''}, course:{code:''}}});			
+				}else{
+					res.render('history', { title: 'Student\'s Transcript', user: req.session.user, history: history });		
+				}
+			});
+		}
 	});
 	
 	router.post('/history/:id', function (req, res, next){data.user.grant.StudentTeacherAdmin(req, res, next);}, function(req, res, next) {

@@ -9,7 +9,7 @@ var UserTranscript = require('./../models/user-transcript');
 var UserTranscriptHistory = require('./../models/user-transcript-history');
 
 module.exports.Contact = function(req){
-	var type   = req.body.type_user;
+	var type   = 'home';
 	var phone  = req.body.phone_user;
 	var addr   = req.body.addr_user;
 	var addr_2 = req.body.addr2_user;

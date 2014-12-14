@@ -12,8 +12,12 @@ module.exports = function (data) {
 				backURL=req.header('Referer') || '/';
 				res.redirect(backURL);
 			} else {
-				backURL=req.header('Referer') || '/';
-				res.redirect(backURL);
+				if(req.session.user.type != 'admin'){
+					res.redirect('/catalog/schedule');
+				} else {
+					backURL=req.header('Referer') || '/';
+					res.redirect(backURL);
+				}
 			}
 		});
 	});
