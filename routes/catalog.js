@@ -5,7 +5,7 @@ module.exports = function (data) {
 	
 	/* GET catalog page. */
 	router.get('/', function(req, res, next) {
-		data.catalog.getCurrent(function(err, id){
+		data.catalog.getNext(function(err, id){
 			if(err){
 				console.log(err);
 				backURL=req.header('Referer') || '/';
@@ -17,7 +17,7 @@ module.exports = function (data) {
 						console.log(err);
 						next({error:err});
 					} else {
-						res.render('catalog', { title: 'Class Catalog', user: req.session.user, catalog: catalog });
+						res.render('catalog', { school: req.session.school, title: 'Class Catalog', user: req.session.user, catalog: catalog });
 					}
 				});
 			}
@@ -30,9 +30,9 @@ module.exports = function (data) {
 		data.schedule.userCurrentSessionSchedule(req, function(err, data){
 			if(err){
 				console.log(err);
-				res.render('schedule', { title: 'My Schedule', user: req.session.user, schedule: {user: req.session.user.id, session:{code:'Not Registered In Any Class'}, course: {code: 'None.'}}});
+				res.render('schedule', { school: req.session.school, title: 'My Schedule', user: req.session.user, schedule: {user: req.session.user.id, session:{code:'Not Registered In Any Class'}, course: {code: 'None.'}}});
 			} else {
-				res.render('schedule', { title: 'My Schedule', user: req.session.user, schedule: data });
+				res.render('schedule', { school: req.session.school, title: 'My Schedule', user: req.session.user, schedule: data });
 			}
 		});
 	});
@@ -42,9 +42,9 @@ module.exports = function (data) {
 		data.subject.getSubjects(function (err, data){
 			if(err){
 				console.log(err);
-				res.render('addcourse', { title: 'UM | Add Class Schedule', user: req.session.user, subjects: {code: '', name: '', description: ''}});
+				res.render('addcourse', { school: req.session.school, title: 'UM | Add Class Schedule', user: req.session.user, subjects: {code: '', name: '', description: ''}});
 			} else {
-				res.render('addcourse', { title: 'UM | Add Class Schedule', user: req.session.user, subjects: data });
+				res.render('addcourse', { school: req.session.school, title: 'UM | Add Class Schedule', user: req.session.user, subjects: data });
 			}
 		});
 	});
@@ -54,9 +54,9 @@ module.exports = function (data) {
 		data.course.getCourseList(function(err, courses){
 			if(err){
 				console.log(err);
-				res.render('addschedule', { title: 'UM | Class Scheduled added', user: req.session.user, courses:{} });
+				res.render('addschedule', { school: req.session.school, title: 'UM | Class Scheduled added', user: req.session.user, courses:{} });
 			} else {
-				res.render('addschedule', { title: 'UM | Class Scheduled added', user: req.session.user, courses:courses });
+				res.render('addschedule', { school: req.session.school, title: 'UM | Class Scheduled added', user: req.session.user, courses:courses });
 			}
 		});
 	});

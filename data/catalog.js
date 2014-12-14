@@ -26,6 +26,35 @@ module.exports.getCurrent = function (cb) {
 	});
 };
 
+
+module.exports.getNext = function (cb) {
+	findCatalog.next(function(err, data){
+		if(err){cb(err, null);return;}
+		
+		cb(null, data);
+		return;
+	});
+};
+ 
+module.exports.getCurrentDetail = function (cb) {
+	findCatalog.currentDetail(function(err, data){
+		if(err){cb(err, null);return;}
+		
+		cb(null, data);
+		return;
+	});
+};
+
+
+module.exports.getNextDetail = function (cb) {
+	findCatalog.nextDetail(function(err, data){
+		if(err){cb(err, null);return;}
+		
+		cb(null, data);
+		return;
+	});
+};
+
 function courseIndexOf(o, arr) {
 
     for (var i = 0; i < arr.length; i++) {
@@ -136,6 +165,7 @@ module.exports.getCatalog = function (id, cb) {
 						//console.log(courses, catalog);
 						catalog.subjects = getSubjects(courses);
 						getCourseInstructors(catalog.schedule,function(err, schedule){
+							console.log(schedule);
 							db.close();
 							if(err){return cb(err,null);}
 							

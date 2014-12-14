@@ -54,7 +54,7 @@ module.exports = function (data) {
 	
 	/* GET/POST register page. */
 	router.get('/register', function(req, res, next) {
-		res.render('register', { title: 'Register for Fall 2014', user: req.session.user });
+		res.render('register', { school: req.session.school, title: 'Register for ' + req.session.school.name, user: req.session.user });
 	}).post('/register', function(req, res) {
 		backURL=req.header('Referer') || '/';
 		res.redirect(backURL);
@@ -75,13 +75,13 @@ module.exports = function (data) {
 					console.log(err);
 					next(err);
 				}
-				res.render('manageapplications', { title: 'Approve Applications', user: req.session.user, applicants: applicants });
+				res.render('manageapplications', { school: req.session.school, title: 'Approve Applications', user: req.session.user, applicants: applicants });
 			});
 	});
 
 	/* GET/POST add page. */
 	router.get('/manage/users', function (req, res, next){data.user.grant.Admin(req, res, next);}, function(req, res, next) {
-		res.render('manageusers', { title: 'Edit / (De)authorize User Profile', user: req.session.user });
+		res.render('manageusers', { school: req.session.school, title: 'Edit / (De)authorize User Profile', user: req.session.user });
 	});
 	
 	

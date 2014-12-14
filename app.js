@@ -46,6 +46,17 @@ app.use(function(req, res, next){
 	var checkUser = data.user.userCheck(req, res, next);
 });
 
+app.use(function(req, res, next){
+	data.catalog.getCurrentDetail(function(err, sessionOne){
+		data.catalog.getNextDetail(function(err, sessionTwo){
+			req.session.school = {name: 'University Manager',
+                    		      in_progress: sessionOne,
+					              register:    sessionTwo };
+			next();
+		});
+	});
+});
+
 // Force HTTPS connections
 function ensure(req, res, next){
 	var port = app.get('port') === 80 ? '' : ':' + app.get('port-ssl'); // Only for testing under local ENV

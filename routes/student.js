@@ -11,9 +11,9 @@ module.exports = function (data) {
 			var id = req.body.grab ? req.body.grab : req.session.user.id;
 			data.schedule.getUserCourseHistory(id, function(err, history){
 				if(err){
-					res.render('history', { title: 'Student\'s Transcript', user: req.session.user, history: {schedule:{code: ''}, course:{code:''}}});			
+					res.render('history', { school: req.session.school, title: 'Student Transcript', user: req.session.user, history: {schedule:{code: ''}, course:{code:''}}});			
 				}else{
-					res.render('history', { title: 'Student\'s Transcript', user: req.session.user, history: history });		
+					res.render('history', { school: req.session.school, title: 'Student Transcript', user: req.session.user, history: history });		
 				}
 			});
 		}
@@ -24,9 +24,9 @@ module.exports = function (data) {
 		console.log(id);
 		data.schedule.getUserCourseHistory(id, function(err, history){
 			if(err){
-				res.render('history', { title: 'Student\'s Transcript', user: req.session.user, history: {schedule:{code: ''}, course:{code:''}}});			
+				res.render('history', { school: req.session.school, title: 'Student Transcript', user: req.session.user, history: {schedule:{code: ''}, course:{code:''}}});			
 			}else{
-				res.render('history', { title: 'Student\'s Transcript', user: req.session.user, history: history });		
+				res.render('history', { school: req.session.school, title: 'Student Transcript', user: req.session.user, history: history });		
 			}
 		});
 	});
@@ -48,17 +48,17 @@ module.exports = function (data) {
 		data.schedule.getCourseSchedule(req, function(err, schedule){
 			if(err){
 				console.log(err);
-				res.render('addrequest', { title: 'Confirm Add Course', user: req.session.user, schedule:{code:'', course:{code:''}}});
+				res.render('addrequest', { school: req.session.school, title: 'Confirm Add Course', user: req.session.user, schedule:{code:'', course:{code:''}}});
 			}
 			data.schedule.userCurrentSessionSchedule(req, function(err, mySchedule){
 				if(err){
 					console.log(err);
-					res.render('addrequest', { title: 'Confirm Add Course', user: req.session.user, schedule:{code:'', course:{code:''}}});
+					res.render('addrequest', { school: req.session.school, title: 'Confirm Add Course', user: req.session.user, schedule:{code:'', course:{code:''}}});
 				}
 				if(inSchedule(schedule, mySchedule)){
-					res.render('addrequest', { title: 'Confirm Add Course', user: req.session.user, schedule: schedule, enrolled:'You are already enrolled.' });					
+					res.render('addrequest', { school: req.session.school, title: 'Confirm Add Course', user: req.session.user, schedule: schedule, enrolled:'You are already enrolled.' });					
 				} else {
-					res.render('addrequest', { title: 'Confirm Add Course', user: req.session.user, schedule: schedule });					
+					res.render('addrequest', { school: req.session.school, title: 'Confirm Add Course', user: req.session.user, schedule: schedule });					
 				}
 			});
 		});
@@ -74,9 +74,9 @@ module.exports = function (data) {
 	}).post('/drop', function (req, res, next){data.user.grant.StudentTeacher(req, res, next);}, function(req, res, next) {		
 		data.schedule.getUserSchedule(req, function(err, schedule){
 			if(err){
-				res.render('drop', { title: 'Confirm Drop Course', user: req.session.user , schedule: {schedule:{code: ''}, course:{code:''}}});			
+				res.render('drop', { school: req.session.school, title: 'Confirm Drop Course', user: req.session.user , schedule: {schedule:{code: ''}, course:{code:''}}});			
 			}else{
-				res.render('drop', { title: 'Confirm Drop Course', user: req.session.user, schedule: schedule });
+				res.render('drop', { school: req.session.school, title: 'Confirm Drop Course', user: req.session.user, schedule: schedule });
 			}
 		});
 	}).post('/drop/complete', function (req, res, next){data.user.grant.StudentTeacher(req, res, next);}, function(req, res, next) {		
