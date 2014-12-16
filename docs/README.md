@@ -1,5 +1,5 @@
 #University Manager Documentation
-Revised (November 10, 2010)
+Revised (December 12, 2014)
 
 ##Table of Contents
 1. [Introduction](about.md)

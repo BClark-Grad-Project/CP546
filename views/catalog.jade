@@ -91,5 +91,7 @@ block content
                               .col-xs-2.col-sm-2.col-md-1.col-lg-1
                                 if remaining > 0
                                   button.dropBtn.btn.btn-xs.btn-warning.pull-right(type='button', value=j.id) Add Course
+                                else
+                                  button.dropBtn.btn.btn-xs.btn-warning.pull-right.disabled(type='button', value=j.id) Add Course
               br
 // End Jade Template

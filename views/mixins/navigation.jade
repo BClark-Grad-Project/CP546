@@ -351,10 +351,9 @@ mixin FeaturesAd()
       li(data-target="#carousel-example-generic", data-slide-to="1")
       li(data-target="#carousel-example-generic", data-slide-to="2")
       li(data-target="#carousel-example-generic", data-slide-to="3")
-      li(data-target="#carousel-example-generic", data-slide-to="4")
     .carousel-inner(role="listbox", style='border-radius:15px;')
       .item.active(style='border-radius:15px;')
-        img(src='/images/1.png')
+        img(src='/images/1.png', style='min-height: 300px;max-height: 300px;width: 100%;')
         .container
           .carousel-caption
             h1 University Manager
@@ -364,26 +363,21 @@ mixin FeaturesAd()
               a(href='#try') Demo
               | !
       .item
-        img(src='/images/1.png')
-        .container
-          .carousel-caption
-            h1 Catalog Management
-            h5 Create curriculum with subjects and courses and assign to teachers and facilities for catalog sessions.
-      .item
-        img(src='/images/1.png')
+        img(src='/images/1.png',style='min-height: 300px;max-height: 300px;width: 100%;')
         .container
           .carousel-caption
             h1 Student Registration Management
             h5 Students can register to attend University, add and drop courses that they have been approved. 
       .item
-        img(src='/images/1.png')
+        img(src='/images/1.png',style='min-height: 300px;max-height: 300px;width: 100%;')
         .container
           .carousel-caption
             h1 Teacher Management
             h5 Teachers can drop students whom fail to meet course prerequisites.
       .item
-        img(src='/images/1.png')
+        img(src='/images/1.png',style='min-height: 300px;max-height: 300px;width: 100%;')
         .container
           .carousel-caption
             h1 User Management
-            h5 Administators approve or deny new student applications, add new users or deactivate accounts.
+            h5 Administators approve or deny new student applications.
+  br
