@@ -1,24 +1,6 @@
 // Begin Jade template.
 extends layout
 
-//-CSS is inserted in the HEAD tag.
-block css
-  
-//-JavaScript will be inserted at the end of the BODY tag.
-block js
-  
-//-Add navigation item to existing navigation set.
-block nav
-  
-//-Add navigation item to existing Administrator navigation set.
-block navAdmin
-  
-//-Add navigation item to existing Teacher navigation set.
-block navTeacher
-  
-//-Add navigation item to existing Student navigation set.
-block navStudent
-  
 //-HTML content to display.
 block content
   section#main.container
@@ -30,54 +12,59 @@ block content
         br
         br
         .col-xs-12.col-sm-12.col-md-12.col-lg-12
-          h2#try Try it!
-          i Apply to university, add & drop courses, view catalogs & schedules, approve & decline applications and more!
-          br
-          br
-          br
+          h2#try Try or Contribute!
+        .col-xs-12.col-sm-6.col-md-6.col-lg-6
+          h4 Register and Try.
+          p Apply to university, add & drop courses, view catalogs & schedules, approve & decline applications and more!
           small The below profiles access features with the password 
             b newaccount 
               | :
-        .col-xs-12.col-sm-12.col-md-12.col-lg-12
-          .col-xs-12.col-sm-12.col-md-12.col-lg-12(style='padding-top:10px;')
-            small 
-              b Student &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| 
-              | &nbsp; &nbsp; student@localhost
-        .col-xs-12.col-sm-12.col-md-12.col-lg-12
-          .col-xs-12.col-sm-12.col-md-12.col-lg-12(style='padding-top:10px;')
-            small
-              b Teacher &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | 
-              | &nbsp; &nbsp; teach@localhost
-        .col-xs-12.col-sm-12.col-md-12.col-lg-12
-          .col-xs-12.col-sm-12.col-md-12.col-lg-12(style='padding-top:10px;')
-            small 
-              b Administrator &nbsp; &nbsp; | 
-              | &nbsp; &nbsp; admin@localhost
-
+          .col-xs-12.col-sm-12.col-md-12.col-lg-12
+            .col-xs-12.col-sm-12.col-md-12.col-lg-12(style='padding-top:10px;')
+              small 
+                b Student &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| 
+                | &nbsp; &nbsp; student@localhost
+              br
+              small
+                b Teacher &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | 
+                | &nbsp; &nbsp; teach@localhost
+              br
+              small 
+                b Administrator &nbsp; &nbsp; | 
+                | &nbsp; &nbsp; admin@localhost
+              br
+              br
+              br
+        .col-xs-12.col-sm-6.col-md-6.col-lg-6
+          h4 Help make things better!
+          i The project has ended and gone to the open-source community on 
+            a(href='https://github.com/BClark-Grad-Project/CP546') Github
+          |.  
+          br
+          br
+          br
     .row
       //-Columns in a row must equal 12. 
       .col-xs-12.col-sm-12.col-md-12.col-lg-12
         br
         br
         br
-        .col-xs-12.col-sm-12.col-md-12.col-lg-12
-          h2#project-info Software Project Information
-          p In this project we were giving a customers vision statement of what they wanted from this software.  Project management was to be done using the Agile practice known as SCRUM.  
-          .col-xs-12.col-sm-12.col-md-5.col-lg-5
-            h4 Software Description
-            small Students, teachers, and administrators in the academic sector who use the University Management System web application can accomplish the critical task associated to student registration for a university and their course enrolments.  Our product is built for mobile device integration and cloud scalability with the latest interface design standards unlike the competition.
-            br
-          .col-xs-12.col-sm-7.col-md-4.col-lg-4
-            h4 Team Members
-            ul.list-unstyled
-              li Brandon L. Clark
-              li Christie Phan
-              li Hooman Majidzadeh Rezvani
-              li Panktiben Soni
-            br
-          .col-xs-12.col-sm-3.col-md-2.col-lg-2
-            img(src='/images/csufamse.png')
-            br
+        .col-xs-12.col-sm-12.col-md-12.col-lg-12.panel.panel-default
+          .panel-body(style='padding-bottom:0px;')
+            h2#project-info Software Project Information
+            p In this project we were giving a customers vision statement of what they wanted from this software.  Project management was to be done using the Agile practice known as SCRUM.  
+            .col-xs-12.col-sm-12.col-md-5.col-lg-5
+              h4 Software Description
+              small Students, teachers, and administrators in the academic sector who use the University Management System web application can accomplish the critical task associated to student registration for a university and their course enrolments.  Our product is built for mobile device integration and cloud scalability with the latest interface design standards unlike the competition.
+            .col-xs-7.col-sm-8.col-md-4.col-lg-4
+              h4 Team Members
+              ul.list-unstyled
+                li Brandon L. Clark
+                li Christie Phan
+                li Hooman Majidzadeh Rezvani
+                li Panktiben Soni
+            .col-xs-5.col-sm-3.col-md-2.col-lg-2
+              img(src='/images/csufamse.png')
     .row
       //-Columns in a row must equal 12. 
       .col-xs-12.col-sm-12.col-md-12.col-lg-12
