@@ -104,3 +104,7 @@ a:hover, a:active {
   padding-right: 15px;
   padding-left: 15px;
 }
+
+.carousel .carousel-indicators li {
+	border-color: #cd610a;
+}

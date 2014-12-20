@@ -15,8 +15,17 @@ Project has a deadline of *December 12, 2014*.
 * Panktiben Soni
 
 #### Demo:
-http://cp546.themindcompany.net 
+https://cp546.themindcompany.net 
 
 #### Documentation
 Documentation regarding the framework and development of this software can be found in the local documentation folder.
 * [Documentation: Table Of Contents](https://github.com/BClark-Grad-Project/CP546/tree/master/docs#university-manager-documentation)
+
+
+#Use or Contribute
+Like what you see? Think you could use this software system or want to help contribute to the project to give it more university rich features?  The project has ended so we have moved to a new place to expand on it:
+
+  UManager
+  --------
+  * Source | https://github.com/TheMindCompany/umanager
+  * Demo   | https://um.themindcompany.net

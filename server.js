@@ -5,9 +5,8 @@ var http = require('http');
 var fs = require('fs');
 
 var options = {
-    key: fs.readFileSync('./local.key'),
-    cert: fs.readFileSync('./local.crt'),
-    ca: fs.readFileSync('./local.crt'),
+    key: fs.readFileSync('/opt/ssl/local.key'),
+    cert: fs.readFileSync('/opt/ssl/local.crt'),
     requestCert: true,
     rejectUnauthorized: false
 };
